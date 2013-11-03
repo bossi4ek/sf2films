@@ -1,0 +1,4 @@
+sf2films_films:
+    resource: "@Sf2filmsFilmsBundle/Resources/config/routing.yml"
+    prefix:   /
+
