@@ -30,6 +30,11 @@ class Genre {
     protected $name;
 
     /**
+     * @ORM\Column()
+     */
+    protected $name_translit;
+
+    /**
      * @ORM\Column(type="smallint")
      */
     protected $is_publish;
@@ -97,5 +102,28 @@ class Genre {
     public function getIsPublish()
     {
         return $this->is_publish;
+    }
+
+    /**
+     * Set name_translit
+     *
+     * @param string $nameTranslit
+     * @return Genre
+     */
+    public function setNameTranslit($nameTranslit)
+    {
+        $this->name_translit = $nameTranslit;
+    
+        return $this;
+    }
+
+    /**
+     * Get name_translit
+     *
+     * @return string 
+     */
+    public function getNameTranslit()
+    {
+        return $this->name_translit;
     }
 }

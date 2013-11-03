@@ -1,1 +1,45 @@
-Hello {{ name }}!
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('bundles/sf2filmsfilms/css/bootstrap.css') }}" rel="stylesheet" />
+    <link href="{{ asset('bundles/sf2filmsfilms/css/post.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block title %}Каталог фильмов{% endblock %}
+
+{% block body %}
+
+    {% block javascripts %}
+        <script src="{{ asset('bundles/sf2filmsfilms/js/jquery-1.10.2.js') }}"></script>
+        <script src="{{ asset('bundles/sf2filmsfilms/js/bootstrap.js') }}"></script>
+        <script src="{{ asset('bundles/sf2filmsfilms/js/main.js') }}"></script>
+    {% endblock %}
+
+    <div id="content_header" class="content_header">
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="{{ path('sf2films_homepage')}}">Каталог фильмов</a>
+            </div>
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav">
+                    <li {% if app.request.attributes.get('_route') == "sf2films_homepage" %}class="active"{% endif %}><a href="{{ path('sf2films_homepage')}}">Главня</a></li>
+                    <li {% if app.request.attributes.get('_route') == "sf2films_films_all" %}class="active"{% endif %}><a href="{{ path('sf2films_films_all')}}">Фильмы</a></li>
+                    <li {% if app.request.attributes.get('_route') == "sf2films_films_genre" %}class="active"{% endif %}><a href="{{ path('sf2films_films_genre')}}">Жанры</a></li>
+                    <li {% if app.request.attributes.get('_route') == "sf2films_films_person" %}class="active"{% endif %}><a href="{{ path('sf2films_films_person')}}">Актеры</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    <div id="content_main">
+        <div>
+            {% block content_main %}
+                Главная страница
+            {% endblock %}
+        </div>
+    </div>
+
+    <div id="content_footer">
+    </div>
+{% endblock %}

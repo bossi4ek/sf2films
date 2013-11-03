@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Sf2films\FilmsBundle\Repository\ContentRepository")
  * @ORM\Table(name="content")
  */
 class Content {
@@ -254,5 +254,38 @@ class Content {
     public function getGenres()
     {
         return $this->genres;
+    }
+
+    /**
+     * Add persons
+     *
+     * @param \Sf2films\FilmsBundle\Entity\Person $persons
+     * @return Content
+     */
+    public function addPerson(\Sf2films\FilmsBundle\Entity\Person $persons)
+    {
+        $this->persons[] = $persons;
+    
+        return $this;
+    }
+
+    /**
+     * Remove persons
+     *
+     * @param \Sf2films\FilmsBundle\Entity\Person $persons
+     */
+    public function removePerson(\Sf2films\FilmsBundle\Entity\Person $persons)
+    {
+        $this->persons->removeElement($persons);
+    }
+
+    /**
+     * Get persons
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPersons()
+    {
+        return $this->persons;
     }
 }

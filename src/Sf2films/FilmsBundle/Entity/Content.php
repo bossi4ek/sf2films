@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Sf2films\FilmsBundle\Repository\ContentRepository")
  * @ORM\Table(name="content")
  */
 class Content {

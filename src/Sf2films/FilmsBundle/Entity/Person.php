@@ -30,6 +30,11 @@ class Person {
     protected $name;
 
     /**
+     * @ORM\Column()
+     */
+    protected $name_translit;
+
+    /**
      * @ORM\Column(type="integer")
      */
     protected $date_birth;
@@ -47,9 +52,6 @@ class Person {
     public function __construct() {
         $this->contents = new ArrayCollection();
     }
-
-
-
 
     /**
      * Get id
@@ -128,5 +130,28 @@ class Person {
     public function getIsPublish()
     {
         return $this->is_publish;
+    }
+
+    /**
+     * Set name_translit
+     *
+     * @param string $nameTranslit
+     * @return Person
+     */
+    public function setNameTranslit($nameTranslit)
+    {
+        $this->name_translit = $nameTranslit;
+    
+        return $this;
+    }
+
+    /**
+     * Get name_translit
+     *
+     * @return string 
+     */
+    public function getNameTranslit()
+    {
+        return $this->name_translit;
     }
 }

@@ -1,3 +1,17 @@
-sf2films_films_homepage:
+sf2films_homepage:
     pattern:  /
-    defaults: { _controller: Sf2filmsFilmsBundle:Default:index }
+    defaults: { _controller: Sf2filmsFilmsBundle:Default:index}
+
+sf2films_films_all:
+    pattern:  /films/{page}
+    defaults: { _controller: Sf2filmsFilmsBundle:Films:showAllFilms, page: 1 }
+    requirements:
+        page:  \d+
+
+sf2films_films_genre:
+    pattern:  /genre
+    defaults: { _controller: Sf2filmsFilmsBundle:Genre:showAllGenre }
+
+sf2films_films_person:
+    pattern:  /person
+    defaults: { _controller: Sf2filmsFilmsBundle:Person:showAllPerson }
