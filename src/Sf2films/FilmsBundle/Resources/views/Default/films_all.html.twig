@@ -1,5 +1,10 @@
 {% extends 'Sf2filmsFilmsBundle:Default:index.html.twig' %}
 
 {% block content_main %}
+    <div style="text-align: center;">
+        <a href="{{ path('sf2films_films_add') }}">
+            <button id="add_films" type="submit" class="btn btn-primary"/>Добавить фильм</button>
+        </a>
+    </div>
     Страница с фильмами (старница {{ page }})
 {% endblock %}

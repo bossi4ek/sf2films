@@ -4,14 +4,42 @@ sf2films_homepage:
 
 sf2films_films_all:
     pattern:  /films/{page}
-    defaults: { _controller: Sf2filmsFilmsBundle:Films:showAllFilms, page: 1 }
+    defaults: { _controller: Sf2filmsFilmsBundle:Films:showAll, page: 1 }
     requirements:
         page:  \d+
 
+sf2films_films_add:
+    pattern:  /films/add
+    defaults: { _controller: Sf2filmsFilmsBundle:Films:addElement }
+
+sf2films_films_element:
+    pattern:  /films/{translit}
+    defaults: { _controller: Sf2filmsFilmsBundle:Films:showElemet }
+
+
+
 sf2films_films_genre:
     pattern:  /genre
-    defaults: { _controller: Sf2filmsFilmsBundle:Genre:showAllGenre }
+    defaults: { _controller: Sf2filmsFilmsBundle:Genre:showAll }
+
+sf2films_films_genre_add:
+    pattern:  /genre/add
+    defaults: { _controller: Sf2filmsFilmsBundle:Genre:addElement }
+
+sf2films_films_genre_del:
+    pattern:  /genre/del/{id}
+    defaults: { _controller: Sf2filmsFilmsBundle:Genre:delElement }
+
+
 
 sf2films_films_person:
     pattern:  /person
-    defaults: { _controller: Sf2filmsFilmsBundle:Person:showAllPerson }
+    defaults: { _controller: Sf2filmsFilmsBundle:Person:showAll }
+
+sf2films_films_person_add:
+    pattern:  /person/add
+    defaults: { _controller: Sf2filmsFilmsBundle:Person:addElement }
+
+sf2films_films_person_del:
+    pattern:  /person/del/{id}
+    defaults: { _controller: Sf2filmsFilmsBundle:Person:delElement }
