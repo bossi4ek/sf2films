@@ -12,10 +12,21 @@ sf2films_films_add:
     pattern:  /films/add
     defaults: { _controller: Sf2filmsFilmsBundle:Films:addElement }
 
+sf2films_films_del:
+    pattern:  /films/del/{id}
+    defaults: { _controller: Sf2filmsFilmsBundle:Films:delElement }
+
 sf2films_films_element:
     pattern:  /films/{translit}
-    defaults: { _controller: Sf2filmsFilmsBundle:Films:showElemet }
+    defaults: { _controller: Sf2filmsFilmsBundle:Films:showElement }
 
+sf2films_films_by_genre:
+    pattern:  /films/genre/{translit}
+    defaults: { _controller: Sf2filmsFilmsBundle:Films:showAllByGenre }
+
+sf2films_films_by_person:
+    pattern:  /films/person/{translit}
+    defaults: { _controller: Sf2filmsFilmsBundle:Films:showAllByPerson }
 
 
 sf2films_films_genre:

@@ -11,11 +11,30 @@ class FilmsController extends Controller
 {
     public function showAllAction($page)
     {
-        return $this->render('Sf2filmsFilmsBundle:Default:films_all.html.twig', array('page' => $page));
+        $em = $this->getDoctrine()->getManager();
+        $data = $em->getRepository('Sf2filmsFilmsBundle:Content')->findAllFilms();
+        return $this->render('Sf2filmsFilmsBundle:Default:films_all.html.twig', array('data' => $data, 'page' => $page));
     }
 
-    public function showElementAction()
+    public function showElementAction($translit)
     {
+        $em = $this->getDoctrine()->getManager();
+        $data = $em->getRepository('Sf2filmsFilmsBundle:Content')->findOneByTranslit($translit);
+        return $this->render('Sf2filmsFilmsBundle:Default:films_element.html.twig', array('data' => $data));
+    }
+
+    public function showAllByGenreAction($translit)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $data = $em->getRepository('Sf2filmsFilmsBundle:Content')->findAllByGenre($translit);
+        return $this->render('Sf2filmsFilmsBundle:Default:films_all.html.twig', array('data' => $data));
+    }
+
+    public function showAllByPersonAction($translit)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $data = $em->getRepository('Sf2filmsFilmsBundle:Content')->findAllByPerson($translit);
+        return $this->render('Sf2filmsFilmsBundle:Default:films_all.html.twig', array('data' => $data));
     }
 
     public function addElementAction(Request $request)
@@ -26,27 +45,30 @@ class FilmsController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-//            if ($form->get('Отправить')->isClicked()) {
-//            }
+            $content_obj = $form->getData();
+            $content_obj->setNameTranslit($this->get('films.transliter')->getTranslit($content_obj->getName()));
+            $content_obj->setDateCreate(time());
+            $content_obj->setDateUpdate(time());
 
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($content_obj);
+            $em->flush();
 
-//            $post_obj = $form->getData();
-//            $post_obj->setDatecreate(time());
-//
-//            //Если выбран checkbox (постим рандомное сообщение)
-//            if ($post_obj->getRandmessage()) {
-//                $post_obj->setMessage($this->container->get('my_randomer')->generateRandomString());
-//            }
-//
-//            $em = $this->getDoctrine()->getManager();
-//            $em->persist($post_obj);
-//            $em->flush();
-//
-//            return $this->redirect($this->generateUrl('sf2films_films_all'));
+            return $this->redirect($this->generateUrl('sf2films_films_all'));
         }
 
         return $this->render('Sf2filmsFilmsBundle:Default:films_add.html.twig', array(
-                'form' => $form->createView())
+            'form' => $form->createView())
         );
+    }
+
+    public function delElementAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $genre = $em->getRepository('Sf2filmsFilmsBundle:Content')->findOneById($id);
+        $em->remove($genre);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('sf2films_films_all'));
     }
 }
