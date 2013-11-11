@@ -10,9 +10,6 @@ class DefaultController extends Controller
 {
     public function indexAction()
     {
-        $content = $this->getDoctrine()->getRepository('Sf2filmsFilmsBundle:Content')->findAll();
-
-        $name = "Test";
-        return $this->render('Sf2filmsFilmsBundle:Default:index.html.twig', array('name' => $name));
+        return $this->render('Sf2filmsFilmsBundle:Default:index.html.twig');
     }
 }
