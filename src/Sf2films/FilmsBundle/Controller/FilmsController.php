@@ -37,6 +37,7 @@ class FilmsController extends Controller
         return $this->render('Sf2filmsFilmsBundle:Default:films_all.html.twig', array('data' => $data));
     }
 
+    //
     public function addElementAction(Request $request)
     {
         $content_obj = new Content();
