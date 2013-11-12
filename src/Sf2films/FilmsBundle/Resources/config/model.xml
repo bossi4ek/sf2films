@@ -4,9 +4,11 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="films" class="Sf2films\FilmsBundle\Films">
-            <argument type="service" id="content.repository"/>
+        <service id="content.repository"
+                 class="Sf2films\FilmsBundle\Repository\ContentRepository"
+                 factory-service="doctrine.orm.entity_manager"
+                 factory-method="getRepository">
+            <argument>Sf2films\FilmsBundle\Entity\Content</argument>
         </service>
-        <service id="films.transliter" class="Sf2films\FilmsBundle\Transliter"></service>
     </services>
 </container>
