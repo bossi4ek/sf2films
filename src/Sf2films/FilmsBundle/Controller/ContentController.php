@@ -56,7 +56,6 @@ class ContentController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $content_obj = $form->getData();
             $content_obj->setNameTranslit($this->get('films.transliter')->getTranslit($content_obj->getName()));
             $content_obj->setDateCreate(time());
             $content_obj->setDateUpdate(time());
