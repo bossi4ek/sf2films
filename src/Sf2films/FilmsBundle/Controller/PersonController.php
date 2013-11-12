@@ -27,10 +27,6 @@ class PersonController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-//            if ($form->get('Отправить')->isClicked()) {
-//            }
-
-            $obj = $form->getData();
             $obj->setNameTranslit($this->get('films.transliter')->getTranslit($obj->getName()));
             $em = $this->getDoctrine()->getManager();
             $em->persist($obj);

@@ -4,29 +4,29 @@ sf2films_homepage:
 
 sf2films_films_all:
     pattern:  /films/{page}
-    defaults: { _controller: Sf2filmsFilmsBundle:Films:showAll, page: 1 }
+    defaults: { _controller: Sf2filmsFilmsBundle:Content:showAll, page: 1 }
     requirements:
         page:  \d+
 
 sf2films_films_add:
     pattern:  /films/add
-    defaults: { _controller: Sf2filmsFilmsBundle:Films:addElement }
+    defaults: { _controller: Sf2filmsFilmsBundle:Content:addElement }
 
 sf2films_films_del:
     pattern:  /films/del/{id}
-    defaults: { _controller: Sf2filmsFilmsBundle:Films:delElement }
+    defaults: { _controller: Sf2filmsFilmsBundle:Content:delElement }
 
 sf2films_films_element:
     pattern:  /films/{translit}
-    defaults: { _controller: Sf2filmsFilmsBundle:Films:showElement }
+    defaults: { _controller: Sf2filmsFilmsBundle:Content:showElement }
 
 sf2films_films_by_genre:
     pattern:  /films/genre/{translit}
-    defaults: { _controller: Sf2filmsFilmsBundle:Films:showAllByGenre }
+    defaults: { _controller: Sf2filmsFilmsBundle:Content:showAllByGenre }
 
 sf2films_films_by_person:
     pattern:  /films/person/{translit}
-    defaults: { _controller: Sf2filmsFilmsBundle:Films:showAllByPerson }
+    defaults: { _controller: Sf2filmsFilmsBundle:Content:showAllByPerson }
 
 
 sf2films_films_genre:

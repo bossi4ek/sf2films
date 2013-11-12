@@ -42,7 +42,7 @@ class ContentRepository extends EntityRepository
     {
         $query = $this->getEntityManager()
             ->createQuery('
-                SELECT content, genre
+                SELECT content
                 FROM Sf2filmsFilmsBundle:Content content
                 LEFT JOIN content.genres genre
                 WHERE genre.name_translit = :translit
@@ -60,7 +60,7 @@ class ContentRepository extends EntityRepository
     {
         $query = $this->getEntityManager()
             ->createQuery('
-                SELECT content, person
+                SELECT content
                 FROM Sf2filmsFilmsBundle:Content content
                 LEFT JOIN content.persons person
                 WHERE person.name_translit = :translit
