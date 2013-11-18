@@ -18,8 +18,21 @@ class LoadFilmsData implements FixtureInterface, OrderedFixtureInterface
         return 10;
     }
 
+    public function copyImg()
+    {
+        $source = __DIR__.'/img';
+        $destination = __DIR__.'/../../../../../web/uploads/poster';
+
+        for ($i = 1; $i <= 4; $i++) {
+            copy($source."/".$i.".jpg", $destination."/".$i.".jpg");
+        }
+        copy($source."/not_img.jpg", $destination."/not_img.jpg");
+    }
+
     public function load(ObjectManager $manager)
     {
+        $this->copyImg();
+
         $translit = new Transliter();
 
         $genre_name = 'Боевик';
@@ -91,6 +104,7 @@ class LoadFilmsData implements FixtureInterface, OrderedFixtureInterface
         $films1 = new Content();
         $films1->setName($films_name);
         $films1->setNameTranslit($translit->getTranslit($films_name));
+        $films1->setPosterImg("1.jpg");
         $films1->setDescription($films_description);
         $films1->setDateCreate(time());
         $films1->setDateUpdate(time() + 1);
@@ -106,6 +120,7 @@ class LoadFilmsData implements FixtureInterface, OrderedFixtureInterface
         $films2 = new Content();
         $films2->setName($films_name);
         $films2->setNameTranslit($translit->getTranslit($films_name));
+        $films2->setPosterImg("2.jpg");
         $films2->setDescription($films_description);
         $films2->setDateCreate(time());
         $films2->setDateUpdate(time() + 1);
@@ -117,11 +132,12 @@ class LoadFilmsData implements FixtureInterface, OrderedFixtureInterface
         $films2->setIsPublish(1);
         $manager->persist($films2);
 //====================================================================
-        $films_name = 'Росомаха: Бессмертный';
+        $films_name = 'Росомаха Бессмертный';
         $films_description = 'Новая глава приключений Росомахи развернётся в Японии, где Логану предстоит выяснить, что острее - когти Росомахи или меч Серебряного Самурая.';
         $films3 = new Content();
         $films3->setName($films_name);
         $films3->setNameTranslit($translit->getTranslit($films_name));
+        $films3->setPosterImg("3.jpg");
         $films3->setDescription($films_description);
         $films3->setDateCreate(time());
         $films3->setDateUpdate(time() + 1);
@@ -135,6 +151,7 @@ class LoadFilmsData implements FixtureInterface, OrderedFixtureInterface
         $films4 = new Content();
         $films4->setName($films_name);
         $films4->setNameTranslit($translit->getTranslit($films_name));
+        $films4->setPosterImg("4.jpg");
         $films4->setDescription($films_description);
         $films4->setDateCreate(time());
         $films4->setDateUpdate(time() + 1);
