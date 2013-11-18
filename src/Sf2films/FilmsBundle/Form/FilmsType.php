@@ -12,6 +12,7 @@ class FilmsType extends AbstractType
     {
         $builder->add('name', 'text')
                 ->add('description', 'textarea')
+                ->add('file', 'file')
                 ->add('genres', 'entity', array(
                       'multiple' => true,
                       'class' => 'Sf2filmsFilmsBundle:Genre',

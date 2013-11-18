@@ -10,34 +10,41 @@
     <div style="font-size: 16px;"><label>Все фильмы</label></div>
     <div id="allPost" class="postBox">
         {% for content_data in data if content_data.name %}
-            <div class="panel panel-default" id_content="{{ content_data.id }}">
+            <div class="panel panel-default post_element" id_content="{{ content_data.id }}">
+                <div class="post_poster">
+                    <a href="{{ path('sf2films_films_element', {'translit': content_data.nameTranslit}) }}">
+                        <img src="{% if content_data.posterImg %} {{ content_data.posterImg }} {% else %} /uploads/poster/not_img.jpg {% endif %}" class="poster_img"/>
+                    </a>
+                </div>
                 <div class="panel-body post_body">
-                    <div style="float: left; font-size: 18px;">
-                        <a href="{{ path('sf2films_films_element', {'translit': content_data.nameTranslit}) }}">
-                            {{ content_data.name }} {% if content_data.isPublish == 0 %}<span style="color: red;">(неопубликованный)</span>{% endif %}
-                        </a>
+                    <div style="overflow: hidden">
+                        <div style="float: left; font-size: 18px;">
+                            <a href="{{ path('sf2films_films_element', {'translit': content_data.nameTranslit}) }}">
+                                {{ content_data.name }} {% if content_data.isPublish == 0 %}<span style="color: red;">(неопубликованный)</span>{% endif %}
+                            </a>
+                        </div>
+                        <div style="float: right;">
+                            <a href="{{ path('sf2films_films_del', {'id': content_data.id}) }}">
+                                <span class="glyphicon glyphicon-remove post_delete"></span>
+                            </a>
+                        </div>
                     </div>
-                    <div style="float: right;">
-                        <a href="{{ path('sf2films_films_del', {'id': content_data.id}) }}">
-                            <span class="glyphicon glyphicon-remove post_delete"></span>
-                        </a>
+                    <div style="padding: 5px;">
+                        <span style="font-weight: bold;">Жанр:</span>
+                        {% for genre in content_data.genres %}
+                            <a href="{{ path('sf2films_films_by_genre', {'translit': genre.nameTranslit}) }}">{{ genre.name }}</a>{% if loop.index !=  content_data.genres|length %}, {% endif %}
+                        {% endfor %}
                     </div>
-                </div>
-                <div style="padding: 5px;">
-                    <span style="font-weight: bold;">Жанр:</span>
-                    {% for genre in content_data.genres %}
-                        <a href="{{ path('sf2films_films_by_genre', {'translit': genre.nameTranslit}) }}">{{ genre.name }}</a>{% if loop.index !=  content_data.genres|length %}, {% endif %}
-                    {% endfor %}
-                </div>
-                <div style="padding: 5px;">
-                    <span style="font-weight: bold;">Актеры:</span>
-                    {% for person in content_data.persons %}
-                        <a href="{{ path('sf2films_films_by_person', {'translit': person.nameTranslit}) }}">{{ person.name }}</a>{% if loop.index !=  content_data.persons|length %}, {% endif %}
-                    {% endfor %}
-                </div>
-                <div style="padding: 5px;">
-                    <span style="font-weight: bold;">Анотация:</span><br/>
-                    {{ content_data.description }}
+                    <div style="padding: 5px;">
+                        <span style="font-weight: bold;">Актеры:</span>
+                        {% for person in content_data.persons %}
+                            <a href="{{ path('sf2films_films_by_person', {'translit': person.nameTranslit}) }}">{{ person.name }}</a>{% if loop.index !=  content_data.persons|length %}, {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div style="padding: 5px;">
+                        <span style="font-weight: bold;">Анотация:</span><br/>
+                        {{ content_data.description }}
+                    </div>
                 </div>
             </div>
         {% else %}
