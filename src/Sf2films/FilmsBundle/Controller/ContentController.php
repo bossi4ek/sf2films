@@ -59,6 +59,7 @@ class ContentController extends Controller
             $content_obj->setNameTranslit($this->get('films.transliter')->getTranslit($content_obj->getName()));
             $content_obj->setDateCreate(time());
             $content_obj->setDateUpdate(time());
+//            $content_obj->upload();
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($content_obj);
