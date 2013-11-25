@@ -5,6 +5,7 @@ namespace Sf2films\FilmsBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Doctrine\ORM\EntityRepository;
+use Sf2films\FilmsBundle\Form\AddInfoType;
 
 class FilmsType extends AbstractType
 {
@@ -35,6 +36,7 @@ class FilmsType extends AbstractType
                       },
                       'property' => 'name'
                 ))
+                ->add('addinfo', new AddInfoType())
                 ->add('is_publish', 'checkbox', array(
                     'required'  => false,
                 ));

@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 /**
  * @ORM\Entity(repositoryClass="Sf2films\FilmsBundle\Repository\ContentRepository")
  * @ORM\Table(name="content")
+ * @ORM\HasLifecycleCallbacks
  */
 class Content {
     /**
@@ -51,6 +52,28 @@ class Content {
     protected $date_update;
 
     /**
+     * @ORM\Column(type="smallint")
+     */
+    protected $is_publish;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    protected $year;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    protected $duration;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    protected $budget;
+
+    protected $addinfo;
+
+    /**
      * @var string $image
      *
      * @ORM\Column(name="poster_img", type="string", length=255, nullable=true)
@@ -58,9 +81,11 @@ class Content {
     protected $poster_img;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @Assert\File(maxSize="6000000")
      */
-    protected $is_publish;
+    private $file;
+
+    private $temp;
 
     /**
      * @ORM\ManyToMany(targetEntity="Genre", inversedBy="contents")
@@ -314,22 +339,82 @@ class Content {
      */
     public function getPosterImg()
     {
-        return $this->poster_img;
+        if (null === $this->poster_img) {
+            return;
+        }
+
+        return $this->getWebPath();
+
+//        return $this->poster_img;
     }
 
 
+//    /**
+//     * @Assert\File(maxSize="6000000")
+//     */
+//    private $file;
+//
+//    /**
+//     * Sets file.
+//     *
+//     * @param UploadedFile $file
+//     */
+//    public function setFile(UploadedFile $file = null)
+//    {
+//        $this->file = $file;
+//    }
+//
+//    /**
+//     * Get file.
+//     *
+//     * @return UploadedFile
+//     */
+//    public function getFile()
+//    {
+//        return $this->file;
+//    }
+//
+//    public function upload()
+//    {
+//        // the file property can be empty if the field is not required
+//        if (null === $this->getFile()) {
+//            return;
+//        }
+//
+//        // use the original file name here but you should
+//        // sanitize it at least to avoid any security issues
+//
+//        // move takes the target directory and then the
+//        // target filename to move to
+//        $this->getFile()->move(
+//            $this->getUploadRootDir(),
+//            $this->getFile()->getClientOriginalName()
+//        );
+//
+//        // set the path property to the filename where you've saved the file
+//        $this->poster_img = $this->getFile()->getClientOriginalName();
+//
+//        // clean up the file property as you won't need it anymore
+//        $this->file = null;
+//    }
+
+
+//===================================================================================
+//For uploads poster
+//===================================================================================
+
     public function getAbsolutePath()
     {
-        return null === $this->path
+        return null === $this->poster_img
             ? null
-            : $this->getUploadRootDir().'/'.$this->path;
+            : $this->getUploadRootDir().'/'.$this->poster_img;
     }
 
     public function getWebPath()
     {
-        return null === $this->path
+        return null === $this->poster_img
             ? null
-            : $this->getUploadDir().'/'.$this->path;
+            : $this->getUploadDir().'/'.$this->poster_img;
     }
 
     protected function getUploadRootDir()
@@ -343,14 +428,8 @@ class Content {
     {
         // get rid of the __DIR__ so it doesn't screw up
         // when displaying uploaded doc/image in the view.
-        return 'uploads/documents';
+        return '/uploads/poster';
     }
-
-
-    /**
-     * @Assert\File(maxSize="6000000")
-     */
-    private $file;
 
     /**
      * Sets file.
@@ -360,16 +439,156 @@ class Content {
     public function setFile(UploadedFile $file = null)
     {
         $this->file = $file;
+        // check if we have an old image path
+        if (isset($this->poster_img)) {
+            // store the old name to delete after the update
+            $this->temp = $this->poster_img;
+            $this->poster_img = null;
+        } else {
+            $this->poster_img = 'initial';
+        }
     }
 
-    /**
-     * Get file.
-     *
-     * @return UploadedFile
-     */
     public function getFile()
     {
         return $this->file;
     }
+
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function preUpload()
+    {
+        if (null !== $this->getFile()) {
+            // do whatever you want to generate a unique name
+            $filename = sha1(uniqid(mt_rand(), true));
+            $this->poster_img = $filename.'.'.$this->getFile()->guessExtension();
+        }
+    }
+
+    /**
+     * @ORM\PostPersist()
+     * @ORM\PostUpdate()
+     */
+    public function upload()
+    {
+        if (null === $this->getFile()) {
+            return;
+        }
+
+        // if there is an error when moving the file, an exception will
+        // be automatically thrown by move(). This will properly prevent
+        // the entity from being persisted to the database on error
+        $this->getFile()->move($this->getUploadRootDir(), $this->poster_img);
+
+        // check if we have an old image
+        if (isset($this->temp)) {
+            // delete the old image
+            unlink($this->getUploadRootDir().'/'.$this->temp);
+            // clear the temp image path
+            $this->temp = null;
+        }
+        $this->file = null;
+    }
+
+    /**
+     * @ORM\PostRemove()
+     */
+    public function removeUpload()
+    {
+        if ($file = $this->getAbsolutePath()) {
+            unlink($file);
+        }
+    }
+//===================================================================================
+
+
+    /**
+     * Set year
+     *
+     * @param integer $year
+     * @return Content
+     */
+    public function setYear($year)
+    {
+        $this->year = $year;
     
+        return $this;
+    }
+
+    /**
+     * Get year
+     *
+     * @return integer 
+     */
+    public function getYear()
+    {
+        return $this->year;
+    }
+
+    /**
+     * Set duration
+     *
+     * @param integer $duration
+     * @return Content
+     */
+    public function setDuration($duration)
+    {
+        $this->duration = $duration;
+    
+        return $this;
+    }
+
+    /**
+     * Get duration
+     *
+     * @return integer 
+     */
+    public function getDuration()
+    {
+        return $this->duration;
+    }
+
+    /**
+     * Set budget
+     *
+     * @param integer $budget
+     * @return Content
+     */
+    public function setBudget($budget)
+    {
+        $this->budget = $budget;
+    
+        return $this;
+    }
+
+    /**
+     * Get budget
+     *
+     * @return integer 
+     */
+    public function getBudget()
+    {
+        return $this->budget;
+    }
+
+    /**
+     * @param mixed $addinfo
+     */
+    public function setAddinfo($addinfo)
+    {
+        $this->addinfo = $addinfo;
+        $this->setYear($addinfo['year']);
+        $this->setDuration($addinfo['duration']);
+        $this->setBudget($addinfo['budget']);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAddinfo()
+    {
+        return $this->addinfo;
+    }
 }

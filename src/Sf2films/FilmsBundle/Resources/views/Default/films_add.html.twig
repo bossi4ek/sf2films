@@ -2,7 +2,8 @@
 
 {% block content_main %}
     <div class="postFormBox">
-        {{ form_start(form) }}
+        <form action="{{ path('sf2films_films_add') }}" method="post" {{ form_enctype(form) }}>
+        {#{{ form_start(form) }}#}
         {{ form_errors(form) }}
         <div class="postFormFields">
             <div class="input-group">
@@ -18,7 +19,7 @@
             <div>
                 {{ form_label(form.file, 'Постер') }}
                 {{ form_errors(form.file) }}
-                {{ form_widget(form.file) }}
+                {{ form_widget(form.file, {'attr': {'novalidate': 'novalidate'}}) }}
             </div>
             <div class="input-group">
                 {{ form_label(form.genres, 'Жанры') }}
@@ -30,6 +31,23 @@
                 {{ form_errors(form.persons) }}
                 {{ form_widget(form.persons, {'attr': {'class': 'form-control'}}) }}
             </div>
+            <div style="border-top: 1px solid #ccc; text-align: center;">Дополнительная информация</div>
+            <div class="input-group">
+                {{ form_label(form.addinfo.year, 'Год') }}
+                {{ form_errors(form.addinfo.year) }}
+                {{ form_widget(form.addinfo.year, {'attr': {'class': 'form-control', 'novalidate': 'novalidate'}}) }}
+            </div>
+            <div class="input-group">
+                {{ form_label(form.addinfo.duration, 'Продолжительность') }}
+                {{ form_errors(form.addinfo.duration) }}
+                {{ form_widget(form.addinfo.duration, {'attr': {'class': 'form-control', 'novalidate': 'novalidate'}}) }}
+            </div>
+            <div class="input-group">
+                {{ form_label(form.addinfo.budget, 'Бюджет') }}
+                {{ form_errors(form.addinfo.budget) }}
+                {{ form_widget(form.addinfo.budget, {'attr': {'class': 'form-control', 'novalidate': 'novalidate'}}) }}
+            </div>
+            <div style="border-top: 1px solid #ccc;"></div>
             <div class="input-group">
                 <span style="margin-right: 10px;">{{ form_label(form.is_publish, 'Опубликовать') }}
                     {{ form_errors(form.is_publish) }}
@@ -39,6 +57,8 @@
         <div class="postFormButtons">
             <button id="addFilms" type="submit" class="btn btn-primary pull-right" style="margin-right: 10px;"/>Сохранить</button>
         </div>
-        {{ form_end(form) }}
+            {{ form_rest(form) }}
+        {#{{ form_end(form) }}#}
+        </form>
     </div>
 {% endblock %}

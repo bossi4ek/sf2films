@@ -40,6 +40,11 @@ class Person {
     protected $date_birth;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    protected $gender_code;
+
+    /**
      * @ORM\Column(type="smallint")
      */
     protected $is_publish;
@@ -153,5 +158,28 @@ class Person {
     public function getNameTranslit()
     {
         return $this->name_translit;
+    }
+
+    /**
+     * Set gender_code
+     *
+     * @param integer $genderCode
+     * @return Person
+     */
+    public function setGenderCode($genderCode)
+    {
+        $this->gender_code = $genderCode;
+    
+        return $this;
+    }
+
+    /**
+     * Get gender_code
+     *
+     * @return integer 
+     */
+    public function getGenderCode()
+    {
+        return $this->gender_code;
     }
 }
