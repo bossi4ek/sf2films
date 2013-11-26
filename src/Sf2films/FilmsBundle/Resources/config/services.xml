@@ -20,5 +20,10 @@
             <argument>%genders%</argument>
             <tag name="form.type" alias="gender" />
         </service>
+
+        <service id="sf2films_films.sitemap" class="Sf2films\FilmsBundle\Sitemap">
+            <argument type="service" id="content.repository"/>
+            <tag name="kernel.event_listener" event="sf2films_films.events.sitemap" method="onSitemapEvent" />
+        </service>
     </services>
 </container>
