@@ -10,6 +10,7 @@ use Sf2films\FilmsBundle\Entity\Content;
 use Sf2films\FilmsBundle\Entity\Genre;
 use Sf2films\FilmsBundle\Entity\Person;
 use Sf2films\FilmsBundle\Transliter;
+use Sf2films\FilmsBundle\Form\GenderType;
 
 class LoadFilmsData implements FixtureInterface, OrderedFixtureInterface
 {
@@ -72,6 +73,7 @@ class LoadFilmsData implements FixtureInterface, OrderedFixtureInterface
         $person1->setNameTranslit($translit->getTranslit($person_name));
         $person1->setDateBirth(111);
         $person1->setIsPublish(1);
+        $person1->setGenderCode(1);
         $manager->persist($person1);
 
         $person_name = 'Арнольд Шварценеггер';
@@ -80,6 +82,7 @@ class LoadFilmsData implements FixtureInterface, OrderedFixtureInterface
         $person2->setNameTranslit($translit->getTranslit($person_name));
         $person2->setDateBirth(111);
         $person2->setIsPublish(1);
+        $person2->setGenderCode(1);
         $manager->persist($person2);
 
         $person_name = 'Жан-Клод Ван Дамм';
@@ -88,6 +91,7 @@ class LoadFilmsData implements FixtureInterface, OrderedFixtureInterface
         $person3->setNameTranslit($translit->getTranslit($person_name));
         $person3->setDateBirth(111);
         $person3->setIsPublish(1);
+        $person3->setGenderCode(1);
         $manager->persist($person3);
 
         $person_name = 'Роберт Джон Берк';
@@ -96,6 +100,7 @@ class LoadFilmsData implements FixtureInterface, OrderedFixtureInterface
         $person4->setNameTranslit($translit->getTranslit($person_name));
         $person4->setDateBirth(111);
         $person4->setIsPublish(0);
+        $person4->setGenderCode(1);
         $manager->persist($person4);
 
 //====================================================================
@@ -112,6 +117,9 @@ class LoadFilmsData implements FixtureInterface, OrderedFixtureInterface
         $films1->addGenre($genre2);
         $films1->addPerson($person1);
         $films1->addPerson($person2);
+        $films1->setYear(2013);
+        $films1->setDuration(134);
+        $films1->setBudget(55000000);
         $films1->setIsPublish(1);
         $manager->persist($films1);
 //====================================================================
@@ -129,6 +137,9 @@ class LoadFilmsData implements FixtureInterface, OrderedFixtureInterface
         $films2->addGenre($genre3);
         $films2->addPerson($person1);
         $films2->addPerson($person3);
+        $films2->setYear(2013);
+        $films2->setDuration(109);
+        $films2->setBudget(61000000);
         $films2->setIsPublish(1);
         $manager->persist($films2);
 //====================================================================
@@ -143,6 +154,9 @@ class LoadFilmsData implements FixtureInterface, OrderedFixtureInterface
         $films3->setDateUpdate(time() + 1);
         $films3->addGenre($genre2);
         $films3->addPerson($person1);
+        $films3->setYear(2013);
+        $films3->setDuration(126);
+        $films3->setBudget(120000000);
         $films3->setIsPublish(1);
         $manager->persist($films3);
 //====================================================================
@@ -161,6 +175,9 @@ class LoadFilmsData implements FixtureInterface, OrderedFixtureInterface
         $films4->addPerson($person1);
         $films4->addPerson($person2);
         $films4->addPerson($person3);
+        $films4->setYear(2013);
+        $films4->setDuration(109);
+        $films4->setBudget(20000000);
         $films4->setIsPublish(0);
         $manager->persist($films4);
 
