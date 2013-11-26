@@ -41,6 +41,24 @@
                             <a href="{{ path('sf2films_films_by_person', {'translit': person.nameTranslit}) }}">{{ person.name }}</a>{% if loop.index !=  content_data.persons|length %}, {% endif %}
                         {% endfor %}
                     </div>
+                    {% if content_data.year !=  0 %}
+                        <div style="padding: 5px;">
+                            <span style="font-weight: bold;">Год:</span>
+                            {{ content_data.year }}
+                        </div>
+                    {% endif %}
+                    {% if content_data.duration !=  0 %}
+                        <div style="padding: 5px;">
+                            <span style="font-weight: bold;">Продолжительность:</span>
+                            {{ content_data.duration }}
+                        </div>
+                    {% endif %}
+                    {% if content_data.budget !=  0 %}
+                        <div style="padding: 5px;">
+                            <span style="font-weight: bold;">Бюджет:</span>
+                            {{ content_data.budget }}
+                        </div>
+                    {% endif %}
                     <div style="padding: 5px;">
                         <span style="font-weight: bold;">Анотация:</span><br/>
                         {{ content_data.description }}

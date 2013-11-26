@@ -14,6 +14,9 @@ class PersonType extends AbstractType
                     'input'  => 'timestamp',
                     'widget' => 'choice',
                 ))
+                ->add('gender_code', 'gender', array(
+                    'empty_value' => 'Выберите пол',
+                ))
                 ->add('is_publish', 'checkbox', array(
                     'required'  => false,
                 ));

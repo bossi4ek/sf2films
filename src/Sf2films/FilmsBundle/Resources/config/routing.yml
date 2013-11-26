@@ -28,6 +28,13 @@ sf2films_films_by_person:
     pattern:  /films/person/{translit}
     defaults: { _controller: Sf2filmsFilmsBundle:Content:showAllByPerson }
 
+sf2films_sitemap:
+    pattern:  /sitemap
+    defaults: { _controller: Sf2filmsFilmsBundle:Content:showSiteMap, _format: xml}
+    requirements:
+          _format:  xml
+
+
 
 sf2films_films_genre:
     pattern:  /genre

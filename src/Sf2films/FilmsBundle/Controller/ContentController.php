@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sf2films\FilmsBundle\Entity\Content;
 use Sf2films\FilmsBundle\Form\FilmsType;
+use Sf2films\FilmsBundle\Event\SitemapEvent;
 //use Sf2films\FilmsBundle\Films;
 
 class ContentController extends Controller
@@ -81,5 +82,17 @@ class ContentController extends Controller
         $em->flush();
 
         return $this->redirect($this->generateUrl('sf2films_films_all'));
+    }
+
+    public function showSiteMapAction()
+    {
+        $event = new SitemapEvent();
+        $dispatcher = $this->get('event_dispatcher');
+        $dispatcher->dispatch('sf2films_films.events.sitemap', $event);
+
+        // Render sitemap.xml
+        return $this->render('Sf2filmsFilmsBundle:Default:sitemap.xml.twig', array(
+            'pages' => $event->getPages(),
+        ));
     }
 }

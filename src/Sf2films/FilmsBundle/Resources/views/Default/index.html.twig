@@ -27,7 +27,7 @@
                     <li {% if app.request.attributes.get('_route') == "sf2films_films_all" %}class="active"{% endif %}><a href="{{ path('sf2films_films_all')}}">Фильмы</a></li>
                     <li {% if app.request.attributes.get('_route') == "sf2films_films_genre" %}class="active"{% endif %}><a href="{{ path('sf2films_films_genre')}}">Жанры</a></li>
                     <li {% if app.request.attributes.get('_route') == "sf2films_films_person" %}class="active"{% endif %}><a href="{{ path('sf2films_films_person')}}">Актеры</a></li>
-                </ul>
+                    <li {% if app.request.attributes.get('_route') == "sf2films_sitemap" %}class="active"{% endif %}><a href="{{ path('sf2films_sitemap')}}" style="float: right;">Карта сайта</a></li>                </ul>
             </div>
         </nav>
     </div>

@@ -52,6 +52,28 @@ class Content {
     protected $date_update;
 
     /**
+     * @ORM\Column(type="smallint")
+     */
+    protected $is_publish;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    protected $year;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    protected $duration;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    protected $budget;
+
+    protected $addinfo;
+
+    /**
      * @var string $image
      *
      * @ORM\Column(name="poster_img", type="string", length=255, nullable=true)
@@ -64,11 +86,6 @@ class Content {
     private $file;
 
     private $temp;
-
-    /**
-     * @ORM\Column(type="smallint")
-     */
-    protected $is_publish;
 
     /**
      * @ORM\ManyToMany(targetEntity="Genre", inversedBy="contents")
@@ -486,4 +503,92 @@ class Content {
     }
 //===================================================================================
 
+
+    /**
+     * Set year
+     *
+     * @param integer $year
+     * @return Content
+     */
+    public function setYear($year)
+    {
+        $this->year = $year;
+    
+        return $this;
+    }
+
+    /**
+     * Get year
+     *
+     * @return integer 
+     */
+    public function getYear()
+    {
+        return $this->year;
+    }
+
+    /**
+     * Set duration
+     *
+     * @param integer $duration
+     * @return Content
+     */
+    public function setDuration($duration)
+    {
+        $this->duration = $duration;
+    
+        return $this;
+    }
+
+    /**
+     * Get duration
+     *
+     * @return integer 
+     */
+    public function getDuration()
+    {
+        return $this->duration;
+    }
+
+    /**
+     * Set budget
+     *
+     * @param integer $budget
+     * @return Content
+     */
+    public function setBudget($budget)
+    {
+        $this->budget = $budget;
+    
+        return $this;
+    }
+
+    /**
+     * Get budget
+     *
+     * @return integer 
+     */
+    public function getBudget()
+    {
+        return $this->budget;
+    }
+
+    /**
+     * @param mixed $addinfo
+     */
+    public function setAddinfo($addinfo)
+    {
+        $this->addinfo = $addinfo;
+        $this->setYear($addinfo['year']);
+        $this->setDuration($addinfo['duration']);
+        $this->setBudget($addinfo['budget']);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAddinfo()
+    {
+        return $this->addinfo;
+    }
 }

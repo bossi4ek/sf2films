@@ -40,6 +40,11 @@ class Person {
     protected $date_birth;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    protected $gender_code;
+
+    /**
      * @ORM\Column(type="smallint")
      */
     protected $is_publish;
