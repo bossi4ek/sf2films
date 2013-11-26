@@ -67,7 +67,7 @@ class Content {
     protected $duration;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="integer")
      */
     protected $budget;
 

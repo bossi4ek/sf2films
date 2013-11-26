@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     {% for page in pages if page.path %}
         <url>
-            <loc>{{ page.path }}</loc>
+            <loc>{{ url('sf2films_homepage')}}{{ page.path }}</loc>
             <lastmod>{{ page.date_update|date('Y-m-d') }}</lastmod>
             <changefreq>monthly</changefreq>
             <priority>0.8</priority>

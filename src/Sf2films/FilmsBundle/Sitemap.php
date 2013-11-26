@@ -20,7 +20,7 @@ class Sitemap {
         $films = $this->repo->findAllFilms();
 
         foreach ($films as $film) {
-            $path = sprintf('/films/%s', $film->getNameTranslit());
+            $path = sprintf('films/%s', $film->getNameTranslit());
             $event->addPage($path, $film->getDateUpdate());
         }
     }
