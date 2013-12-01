@@ -58,16 +58,19 @@ class Content {
 
     /**
      * @ORM\Column(type="smallint")
+     * @Assert\NotBlank()
      */
     protected $year;
 
     /**
      * @ORM\Column(type="smallint")
+     * @Assert\NotBlank()
      */
     protected $duration;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank()
      */
     protected $budget;
 
@@ -99,9 +102,16 @@ class Content {
      **/
     private $persons;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Tag", mappedBy="content", cascade={"persist"})
+     **/
+    private $tags;
+
+
     public function __construct() {
         $this->genres = new ArrayCollection();
         $this->persons = new ArrayCollection();
+        $this->tags = new ArrayCollection();
     }
 
 
@@ -250,7 +260,8 @@ class Content {
      */
     public function getIsPublish()
     {
-        return $this->is_publish;
+//        return $this->is_publish;
+        return $this->is_publish == 1 ? true : false;
     }
 
     /**
@@ -589,6 +600,43 @@ class Content {
      */
     public function getAddinfo()
     {
+        $addinfo['year'] = $this->getYear();
+        $addinfo['duration'] = $this->getDuration();
+        $addinfo['budget'] = $this->getBudget();
+        $this->addinfo = $addinfo;
         return $this->addinfo;
+    }
+
+    /**
+     * Add tags
+     *
+     * @param \Sf2films\FilmsBundle\Entity\Tag $tags
+     * @return Content
+     */
+    public function addTag(\Sf2films\FilmsBundle\Entity\Tag $tags)
+    {
+        $this->tags[] = $tags;
+    
+        return $this;
+    }
+
+    /**
+     * Remove tags
+     *
+     * @param \Sf2films\FilmsBundle\Entity\Tag $tags
+     */
+    public function removeTag(\Sf2films\FilmsBundle\Entity\Tag $tags)
+    {
+        $this->tags->removeElement($tags);
+    }
+
+    /**
+     * Get tags
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTags()
+    {
+        return $this->tags;
     }
 }

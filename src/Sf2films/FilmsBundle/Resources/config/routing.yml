@@ -12,6 +12,10 @@ sf2films_films_add:
     pattern:  /films/add
     defaults: { _controller: Sf2filmsFilmsBundle:Content:addElement }
 
+sf2films_films_edit:
+    pattern:  /films/edit/{id}
+    defaults: { _controller: Sf2filmsFilmsBundle:Content:editElement }
+
 sf2films_films_del:
     pattern:  /films/del/{id}
     defaults: { _controller: Sf2filmsFilmsBundle:Content:delElement }
@@ -44,6 +48,10 @@ sf2films_films_genre_add:
     pattern:  /genre/add
     defaults: { _controller: Sf2filmsFilmsBundle:Genre:addElement }
 
+sf2films_films_genre_edit:
+    pattern:  /genre/edit/{id}
+    defaults: { _controller: Sf2filmsFilmsBundle:Genre:editElement }
+
 sf2films_films_genre_del:
     pattern:  /genre/del/{id}
     defaults: { _controller: Sf2filmsFilmsBundle:Genre:delElement }
@@ -57,6 +65,10 @@ sf2films_films_person:
 sf2films_films_person_add:
     pattern:  /person/add
     defaults: { _controller: Sf2filmsFilmsBundle:Person:addElement }
+
+sf2films_films_person_edit:
+    pattern:  /person/edit/{id}
+    defaults: { _controller: Sf2filmsFilmsBundle:Person:editElement }
 
 sf2films_films_person_del:
     pattern:  /person/del/{id}

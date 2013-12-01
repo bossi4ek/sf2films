@@ -16,6 +16,9 @@
                         {{ genre_data.name }} {% if genre_data.isPublish == 0 %}<span style="color: red;">(неопубликованный)</span>{% endif %}
                     </div>
                     <div style="float: right;">
+                        <a href="{{ path('sf2films_films_genre_edit', {'id': genre_data.id}) }}">
+                            <span class="glyphicon glyphicon-edit post_edit"></span>
+                        </a>
                         <a href="{{ path('sf2films_films_genre_del', {'id': genre_data.id}) }}">
                             <span class="glyphicon glyphicon-remove post_delete"></span>
                         </a>

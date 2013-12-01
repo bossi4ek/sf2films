@@ -19,6 +19,29 @@ class PersonController extends Controller
     {
     }
 
+    public function editElementAction(Request $request)
+    {
+        $id = $request->attributes->get('id');
+        $em = $this->getDoctrine()->getManager();
+        $obj = $em->getRepository('Sf2filmsFilmsBundle:Person')->findOneById($id);
+        $form = $this->createForm(new PersonType(), $obj);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $obj->setNameTranslit($this->get('films.transliter')->getTranslit($obj->getName()));
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($obj);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('sf2films_films_person'));
+        }
+
+        return $this->render('Sf2filmsFilmsBundle:Default:person.html.twig', array(
+                'form' => $form->createView())
+        );
+    }
+
     public function addElementAction(Request $request)
     {
         $obj = new Person();
@@ -35,7 +58,7 @@ class PersonController extends Controller
             return $this->redirect($this->generateUrl('sf2films_films_person'));
         }
 
-        return $this->render('Sf2filmsFilmsBundle:Default:person_add.html.twig', array(
+        return $this->render('Sf2filmsFilmsBundle:Default:person.html.twig', array(
                 'form' => $form->createView())
         );
     }

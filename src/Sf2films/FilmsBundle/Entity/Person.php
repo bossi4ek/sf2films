@@ -134,7 +134,7 @@ class Person {
      */
     public function getIsPublish()
     {
-        return $this->is_publish;
+        return $this->is_publish == 1 ? true : false;
     }
 
     /**

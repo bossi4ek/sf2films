@@ -54,7 +54,7 @@ body {
 }
 
 .post_delete {
-    float: right;
+    /*float: right;*/
     cursor: pointer;
 }
 
@@ -87,4 +87,13 @@ body {
 
 .pagination_ajax li{
     cursor: pointer;
+}
+
+.tags li {
+    list-style-type: none;
+    margin: 5px 0;
+}
+
+.tag_box {
+    width: 200px;
 }

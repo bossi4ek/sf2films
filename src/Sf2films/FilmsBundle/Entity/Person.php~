@@ -134,7 +134,7 @@ class Person {
      */
     public function getIsPublish()
     {
-        return $this->is_publish;
+        return $this->is_publish == 1 ? true : false;
     }
 
     /**
@@ -158,5 +158,28 @@ class Person {
     public function getNameTranslit()
     {
         return $this->name_translit;
+    }
+
+    /**
+     * Set gender_code
+     *
+     * @param integer $genderCode
+     * @return Person
+     */
+    public function setGenderCode($genderCode)
+    {
+        $this->gender_code = $genderCode;
+    
+        return $this;
+    }
+
+    /**
+     * Get gender_code
+     *
+     * @return integer 
+     */
+    public function getGenderCode()
+    {
+        return $this->gender_code;
     }
 }

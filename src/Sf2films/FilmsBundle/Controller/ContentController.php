@@ -49,6 +49,47 @@ class ContentController extends Controller
                               array('data' => $this->getFilmsService()->findAllByPerson($translit)));
     }
 
+    public function editElementAction(Request $request)
+    {
+        $id = $request->attributes->get('id');
+        $em = $this->getDoctrine()->getManager();
+        $content_obj = $em->getRepository('Sf2filmsFilmsBundle:Content')->findOneById($id);
+
+        $originalTags = array();
+        if ($content_obj->getTags() != null) {
+            // Create an array of the current Tag objects in the database
+            foreach ($content_obj->getTags() as $tag) $originalTags[] = $tag;
+        }
+
+        $form = $this->createForm(new FilmsType(), $content_obj);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            // filter $originalTags to contain tags no longer present
+            foreach ($content_obj->getTags() as $tag) {
+                foreach ($originalTags as $key => $toDel) {
+                    if ($toDel->getId() === $tag->getId()) {
+                        unset($originalTags[$key]);
+                    }
+                }
+            }
+
+            $content_obj->setNameTranslit($this->get('films.transliter')->getTranslit($content_obj->getName()));
+            $content_obj->setDateUpdate(time());
+
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('sf2films_films_all'));
+        }
+
+        return $this->render('Sf2filmsFilmsBundle:Default:films.html.twig', array(
+                'action' => $this->generateUrl('sf2films_films_edit', array('id' => $id)),
+                'form' => $form->createView())
+        );
+    }
+
     public function addElementAction(Request $request)
     {
         $content_obj = new Content();
@@ -69,7 +110,8 @@ class ContentController extends Controller
             return $this->redirect($this->generateUrl('sf2films_films_all'));
         }
 
-        return $this->render('Sf2filmsFilmsBundle:Default:films_add.html.twig', array(
+        return $this->render('Sf2filmsFilmsBundle:Default:films.html.twig', array(
+            'action' => $this->generateUrl('sf2films_films_add'),
             'form' => $form->createView())
         );
     }
