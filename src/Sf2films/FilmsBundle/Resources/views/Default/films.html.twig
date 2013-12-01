@@ -1,0 +1,76 @@
+{% extends 'Sf2filmsFilmsBundle:Default:index.html.twig' %}
+
+{% block content_main %}
+    <div class="postFormBox">
+        <form action="{{ action }}" method="post" {{ form_enctype(form) }} novalidate="">
+        {#{{ form_start(form) }}#}
+        {{ form_errors(form) }}
+        <div class="postFormFields">
+            <div class="input-group">
+                {{ form_label(form.name, 'Название') }}
+                {{ form_errors(form.name) }}
+                {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div>
+                <div>
+                    <ul class="tags" data-prototype="{{ form_widget(form.tags.vars.prototype.name, {'attr': {'class': 'form-control tag_box'}}) | e }}">
+                        {% for tag in form.tags %}
+                            <li>{{ form_row(tag.name, {'attr': {'class': 'form-control'}}) }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div>
+                    {#<a href="#" class="add_tag">Добавить тег</a>#}
+                </div>
+            </div>
+            <div>
+                {{ form_label(form.description, 'Описание') }}
+                {{ form_errors(form.description) }}
+                {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div>
+                {{ form_label(form.file, 'Постер') }}
+                {{ form_errors(form.file) }}
+                {{ form_widget(form.file, {'attr': {'novalidate': 'novalidate'}}) }}
+            </div>
+            <div class="input-group">
+                {{ form_label(form.genres, 'Жанры') }}
+                {{ form_errors(form.genres) }}
+                {{ form_widget(form.genres, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="input-group">
+                {{ form_label(form.persons, 'Актеры') }}
+                {{ form_errors(form.persons) }}
+                {{ form_widget(form.persons, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div style="border-top: 1px solid #ccc; text-align: center;">Дополнительная информация</div>
+            <div class="input-group">
+                {{ form_label(form.addinfo.year, 'Год') }}
+                {{ form_errors(form.addinfo.year) }}
+                {{ form_widget(form.addinfo.year, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="input-group">
+                {{ form_label(form.addinfo.duration, 'Продолжительность') }}
+                {{ form_errors(form.addinfo.duration) }}
+                {{ form_widget(form.addinfo.duration, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="input-group">
+                {{ form_label(form.addinfo.budget, 'Бюджет') }}
+                {{ form_errors(form.addinfo.budget) }}
+                {{ form_widget(form.addinfo.budget, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div style="border-top: 1px solid #ccc;"></div>
+            <div class="input-group">
+                <span style="margin-right: 10px;">{{ form_label(form.is_publish, 'Опубликовать') }}
+                    {{ form_errors(form.is_publish) }}
+                    {{ form_widget(form.is_publish) }}
+            </div>
+        </div>
+        <div class="postFormButtons">
+            <button id="addFilms" type="submit" class="btn btn-primary pull-right" style="margin-right: 10px;"/>Сохранить</button>
+        </div>
+            {{ form_rest(form) }}
+        {#{{ form_end(form) }}#}
+        </form>
+    </div>
+{% endblock %}

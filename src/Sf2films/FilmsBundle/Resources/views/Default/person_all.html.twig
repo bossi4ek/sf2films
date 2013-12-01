@@ -14,9 +14,12 @@
                 <div class="panel-body post_body">
                     <div style="float: left;">
                         <p style="font-weight: bold;">{{ person_data.name }} {% if person_data.isPublish == 0 %}<span style="color: red;">(неопубликованный)</span>{% endif %}</p>
-                        <p>Дата рождения: {{ person_data.dateBirth|date('Y-m-d') }}</p>
+                        <p>Дата рождения: {{ person_data.dateBirth|date('d-m-Y') }}</p>
                     </div>
                     <div style="float: right;">
+                        <a href="{{ path('sf2films_films_person_edit', {'id': person_data.id}) }}">
+                            <span class="glyphicon glyphicon-edit post_edit"></span>
+                        </a>
                         <a href="{{ path('sf2films_films_person_del', {'id': person_data.id}) }}">
                             <span class="glyphicon glyphicon-remove post_delete"></span>
                         </a>

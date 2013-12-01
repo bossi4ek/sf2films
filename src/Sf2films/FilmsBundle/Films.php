@@ -18,7 +18,7 @@ class Films {
         return $this->repo->findAllFilms();
     }
 
-//Get one Element
+//Get one Element by translit
     public function findOneByTranslit($translit){
         return $this->repo->findOneByTranslit($translit);
     }

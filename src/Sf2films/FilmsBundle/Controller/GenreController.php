@@ -19,6 +19,29 @@ class GenreController extends Controller
     {
     }
 
+    public function editElementAction(Request $request)
+    {
+        $id = $request->attributes->get('id');
+        $em = $this->getDoctrine()->getManager();
+        $obj = $em->getRepository('Sf2filmsFilmsBundle:Genre')->findOneById($id);
+
+        $form = $this->createForm(new GenreType(), $obj);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $obj->setNameTranslit($this->get('films.transliter')->getTranslit($obj->getName()));
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('sf2films_films_genre'));
+        }
+
+        return $this->render('Sf2filmsFilmsBundle:Default:genre.html.twig', array(
+                'form' => $form->createView())
+        );
+    }
+
     public function addElementAction(Request $request)
     {
         $obj = new Genre();
@@ -35,7 +58,7 @@ class GenreController extends Controller
             return $this->redirect($this->generateUrl('sf2films_films_genre'));
         }
 
-        return $this->render('Sf2filmsFilmsBundle:Default:genre_add.html.twig', array(
+        return $this->render('Sf2filmsFilmsBundle:Default:genre.html.twig', array(
                 'form' => $form->createView())
         );
     }

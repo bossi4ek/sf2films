@@ -6,12 +6,19 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Doctrine\ORM\EntityRepository;
 use Sf2films\FilmsBundle\Form\AddInfoType;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class FilmsType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('name', 'text')
+                ->add('tags', 'collection', array(
+                    'type' => new TagType(),
+                    'allow_add' => true,
+                    'allow_delete' => true,
+                    'by_reference' => false
+                ))
                 ->add('description', 'textarea')
                 ->add('file', 'file')
                 ->add('genres', 'entity', array(
@@ -48,7 +55,7 @@ class FilmsType extends AbstractType
         return 'films';
     }
 
-    public function getDefaultOptions(array $options)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         return array(
             'data_class' => 'Sf2films\FilmsBundle\Entity\Content',

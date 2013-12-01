@@ -101,7 +101,7 @@ class Genre {
      */
     public function getIsPublish()
     {
-        return $this->is_publish;
+        return $this->is_publish == 1 ? true : false;
     }
 
     /**
@@ -125,5 +125,10 @@ class Genre {
     public function getNameTranslit()
     {
         return $this->name_translit;
+    }
+
+    public function __toString()
+    {
+        return $this->name;
     }
 }

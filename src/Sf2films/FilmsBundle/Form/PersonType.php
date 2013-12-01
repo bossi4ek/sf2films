@@ -4,6 +4,7 @@ namespace Sf2films\FilmsBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class PersonType extends AbstractType
 {
@@ -27,7 +28,7 @@ class PersonType extends AbstractType
         return 'person';
     }
 
-    public function getDefaultOptions(array $options)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         return array(
             'data_class' => 'Sf2films\FilmsBundle\Entity\Person',

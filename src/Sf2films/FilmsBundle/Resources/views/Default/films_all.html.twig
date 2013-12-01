@@ -24,8 +24,11 @@
                             </a>
                         </div>
                         <div style="float: right;">
+                            <a href="{{ path('sf2films_films_edit', {'id': content_data.id}) }}">
+                                <span class="glyphicon glyphicon-edit post_edit" title="Редактировать"></span>
+                            </a>
                             <a href="{{ path('sf2films_films_del', {'id': content_data.id}) }}">
-                                <span class="glyphicon glyphicon-remove post_delete"></span>
+                                <span class="glyphicon glyphicon-remove post_delete" title="Удалить"></span>
                             </a>
                         </div>
                     </div>
