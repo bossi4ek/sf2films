@@ -59,6 +59,7 @@ class FilmsType extends AbstractType
     {
         return array(
             'data_class' => 'Sf2films\FilmsBundle\Entity\Content',
+//            'validation_groups' => array("xz")
         );
     }
 }

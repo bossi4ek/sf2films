@@ -55,17 +55,22 @@ class ContentController extends Controller
         $em = $this->getDoctrine()->getManager();
         $content_obj = $em->getRepository('Sf2filmsFilmsBundle:Content')->findOneById($id);
 
+
         $originalTags = array();
         if ($content_obj->getTags() != null) {
             // Create an array of the current Tag objects in the database
             foreach ($content_obj->getTags() as $tag) $originalTags[] = $tag;
         }
 
-        $form = $this->createForm(new FilmsType(), $content_obj);
+        $form = $this->createForm(new FilmsType(), $content_obj, array("validation_groups" => array("EditContent")));
 
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+
+//            var_dump($content_obj->getIsPublish());
+//            exit;
+
             // filter $originalTags to contain tags no longer present
             foreach ($content_obj->getTags() as $tag) {
                 foreach ($originalTags as $key => $toDel) {
@@ -93,11 +98,18 @@ class ContentController extends Controller
     public function addElementAction(Request $request)
     {
         $content_obj = new Content();
-        $form = $this->createForm(new FilmsType(), $content_obj);
+        $form = $this->createForm(new FilmsType(), $content_obj, array("validation_groups" => array("AddContent")));
 
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+
+//            var_dump($content_obj->getIsPublish());
+//            exit;
+
+
+            $content_obj->setIsPublish($content_obj->getIsPublish() == false ? 0 : $content_obj->getIsPublish());
+
             $content_obj->setNameTranslit($this->get('films.transliter')->getTranslit($content_obj->getName()));
             $content_obj->setDateCreate(time());
             $content_obj->setDateUpdate(time());
