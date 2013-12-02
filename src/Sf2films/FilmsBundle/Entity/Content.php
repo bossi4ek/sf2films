@@ -27,7 +27,8 @@ class Content {
 
     /**
      * @ORM\Column()
-     * @Assert\Length(min = "2")
+     * @Assert\Length(min = "5", groups={"AddContent"})
+     * @Assert\Length(min = "2", groups={"EditContent"})
      */
     protected $name;
 
@@ -52,25 +53,40 @@ class Content {
     protected $date_update;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="smallint", options={"default" = 0})
      */
     protected $is_publish;
 
     /**
      * @ORM\Column(type="smallint")
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(groups={"AddContent", "EditContent"})
+     * @Assert\Regex(
+     *     pattern     = "/^[0-9]+$/i",
+     *     message="Год состоит только с цыфр",
+     *     groups={"AddContent", "EditContent"}
+     * )
      */
     protected $year;
 
     /**
      * @ORM\Column(type="smallint")
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(groups={"AddContent", "EditContent"})
+     * @Assert\Regex(
+     *     pattern     = "/^[0-9]+$/i",
+     *     message="Продолжительность состоит только с цыфр",
+     *     groups={"AddContent", "EditContent"}
+     * )
      */
     protected $duration;
 
     /**
      * @ORM\Column(type="integer")
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(groups={"AddContent", "EditContent"})
+     * @Assert\Regex(
+     *     pattern     = "/^[0-9]+$/i",
+     *     message="Бюджет состоит только с цыфр",
+     *     groups={"AddContent", "EditContent"}
+     * )
      */
     protected $budget;
 
@@ -249,6 +265,7 @@ class Content {
     public function setIsPublish($isPublish)
     {
         $this->is_publish = $isPublish;
+//        $this->is_publish = $isPublish == false ? 0 : 1;
     
         return $this;
     }

@@ -4,6 +4,7 @@ namespace Sf2films\FilmsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
@@ -28,6 +29,10 @@ class Tag {
      * @ORM\JoinColumn(name="content_id", referencedColumnName="id")
      **/
     private $content;
+
+//    public function __construct() {
+//        $this->content = new ArrayCollection();
+//    }
 
     /**
      * @param mixed $id
