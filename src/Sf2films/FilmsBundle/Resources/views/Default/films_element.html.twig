@@ -29,7 +29,7 @@
                     <div style="padding: 5px;">
                         <span style="font-weight: bold;">Теги:</span>
                         {% for tag in data.tags %}
-                            {{ tag.name }}{% if loop.index !=  data.tags|length %}, {% endif %}
+                            {{ tag.name }}{% if not loop.last %}, {% endif %}
                         {% endfor %}
                     </div>
                 {% endif %}
@@ -38,7 +38,7 @@
                     <div style="padding: 5px;">
                         <span style="font-weight: bold;">Жанр:</span>
                         {% for genre in data.genres %}
-                            <a href="{{ path('sf2films_films_by_genre', {'translit': genre.nameTranslit}) }}">{{ genre.name }}</a>{% if loop.index !=  data.genres|length %}, {% endif %}
+                            <a href="{{ path('sf2films_films_by_genre', {'translit': genre.nameTranslit}) }}">{{ genre.name }}</a>{% if not loop.last %}, {% endif %}
                         {% endfor %}
                     </div>
                 {% endif %}
@@ -47,7 +47,7 @@
                     <div style="padding: 5px;">
                         <span style="font-weight: bold;">Актеры:</span>
                         {% for person in data.persons %}
-                            <a href="{{ path('sf2films_films_by_person', {'translit': person.nameTranslit}) }}">{{ person.name }}</a>{% if loop.index !=  data.persons|length %}, {% endif %}
+                            <a href="{{ path('sf2films_films_by_person', {'translit': person.nameTranslit}) }}">{{ person.name }}</a>{% if not loop.last %}, {% endif %}
                         {% endfor %}
                     </div>
                 {% endif %}

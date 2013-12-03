@@ -75,6 +75,7 @@ class ContentController extends Controller
 
         return $this->render('Sf2filmsFilmsBundle:Default:films.html.twig', array(
             'action' => $this->generateUrl('sf2films_films_add'),
+            'content' => $content_obj,
             'form' => $form->createView())
         );
     }
@@ -116,6 +117,7 @@ class ContentController extends Controller
 
         return $this->render('Sf2filmsFilmsBundle:Default:films.html.twig', array(
                 'action' => $this->generateUrl('sf2films_films_edit', array('id' => $id)),
+                'content' => $content_obj,
                 'form' => $form->createView())
         );
     }
@@ -123,8 +125,13 @@ class ContentController extends Controller
     public function delElementAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-        $genre = $em->getRepository('Sf2filmsFilmsBundle:Content')->findOneById($id);
-        $em->remove($genre);
+        $content = $em->getRepository('Sf2filmsFilmsBundle:Content')->findOneById($id);
+        $em->remove($content);
+        //remove the relationship
+        foreach ($content->getTags() as $tag) {
+            //delete the Tag entirely
+            $em->remove($tag);
+        }
         $em->flush();
 
         return $this->redirect($this->generateUrl('sf2films_films_all'));

@@ -97,3 +97,9 @@ body {
 .tag_box {
     width: 200px;
 }
+
+.postFormFields img {
+    padding: 3px;
+    margin: 10px 0;
+    border: 1px solid #CCCCCC;
+}
