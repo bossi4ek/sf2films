@@ -29,6 +29,7 @@
                 {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
             </div>
             <div>
+                <img src="{{ content.posterImg }}"/>
                 {{ form_label(form.file, 'Постер') }}
                 {{ form_errors(form.file) }}
                 {{ form_widget(form.file, {'attr': {'novalidate': 'novalidate'}}) }}

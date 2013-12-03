@@ -24,36 +24,55 @@
                         </a>
                     </div>
                 </div>
-                <div style="padding: 5px;">
-                    <span style="font-weight: bold;">Жанр:</span>
-                    {% for genre in data.genres %}
-                        <a href="{{ path('sf2films_films_by_genre', {'translit': genre.nameTranslit}) }}">{{ genre.name }}</a>{% if loop.index !=  data.genres|length %}, {% endif %}
-                    {% endfor %}
-                </div>
-                <div style="padding: 5px;">
-                    <span style="font-weight: bold;">Актеры:</span>
-                    {% for person in data.persons %}
-                        <a href="{{ path('sf2films_films_by_person', {'translit': person.nameTranslit}) }}">{{ person.name }}</a>{% if loop.index !=  data.persons|length %}, {% endif %}
-                    {% endfor %}
-                </div>
+
+                {% if data.tags|length > 0 %}
+                    <div style="padding: 5px;">
+                        <span style="font-weight: bold;">Теги:</span>
+                        {% for tag in data.tags %}
+                            {{ tag.name }}{% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                {% if data.genres|length > 0 %}
+                    <div style="padding: 5px;">
+                        <span style="font-weight: bold;">Жанр:</span>
+                        {% for genre in data.genres %}
+                            <a href="{{ path('sf2films_films_by_genre', {'translit': genre.nameTranslit}) }}">{{ genre.name }}</a>{% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                {% if data.persons|length > 0 %}
+                    <div style="padding: 5px;">
+                        <span style="font-weight: bold;">Актеры:</span>
+                        {% for person in data.persons %}
+                            <a href="{{ path('sf2films_films_by_person', {'translit': person.nameTranslit}) }}">{{ person.name }}</a>{% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
                 {% if data.year !=  0 %}
                     <div style="padding: 5px;">
                         <span style="font-weight: bold;">Год:</span>
                         {{ data.year }}
                     </div>
                 {% endif %}
+
                 {% if data.duration !=  0 %}
                     <div style="padding: 5px;">
                         <span style="font-weight: bold;">Продолжительность:</span>
                         {{ data.duration }}
                     </div>
                 {% endif %}
+
                 {% if data.budget !=  0 %}
                     <div style="padding: 5px;">
                         <span style="font-weight: bold;">Бюджет:</span>
                         {{ data.budget }}
                     </div>
                 {% endif %}
+
                 <div style="padding: 5px;">
                     <span style="font-weight: bold;">Анотация:</span><br/>
                     {{ data.description }}

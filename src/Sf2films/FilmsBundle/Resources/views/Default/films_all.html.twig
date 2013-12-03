@@ -32,18 +32,25 @@
                             </a>
                         </div>
                     </div>
-                    <div style="padding: 5px;">
-                        <span style="font-weight: bold;">Жанр:</span>
-                        {% for genre in content_data.genres %}
-                            <a href="{{ path('sf2films_films_by_genre', {'translit': genre.nameTranslit}) }}">{{ genre.name }}</a>{% if loop.index !=  content_data.genres|length %}, {% endif %}
-                        {% endfor %}
-                    </div>
-                    <div style="padding: 5px;">
-                        <span style="font-weight: bold;">Актеры:</span>
-                        {% for person in content_data.persons %}
-                            <a href="{{ path('sf2films_films_by_person', {'translit': person.nameTranslit}) }}">{{ person.name }}</a>{% if loop.index !=  content_data.persons|length %}, {% endif %}
-                        {% endfor %}
-                    </div>
+
+                    {% if content_data.genres|length > 0 %}
+                        <div style="padding: 5px;">
+                            <span style="font-weight: bold;">Жанр:</span>
+                            {% for genre in content_data.genres %}
+                                <a href="{{ path('sf2films_films_by_genre', {'translit': genre.nameTranslit}) }}">{{ genre.name }}</a>{% if not loop.last %}, {% endif %}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    {% if content_data.persons|length > 0 %}
+                        <div style="padding: 5px;">
+                            <span style="font-weight: bold;">Актеры:</span>
+                            {% for person in content_data.persons %}
+                                <a href="{{ path('sf2films_films_by_person', {'translit': person.nameTranslit}) }}">{{ person.name }}</a>{% if not loop.last %}, {% endif %}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
                     {% if content_data.year !=  0 %}
                         <div style="padding: 5px;">
                             <span style="font-weight: bold;">Год:</span>
