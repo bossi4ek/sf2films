@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Sf2films\FilmsBundle\Entity\Content;
 use Sf2films\FilmsBundle\Form\FilmsType;
 use Sf2films\FilmsBundle\Event\SitemapEvent;
+use Sf2films\FilmsBundle\Entity\Tag;
 //use Sf2films\FilmsBundle\Films;
 
 class ContentController extends Controller
@@ -49,52 +50,6 @@ class ContentController extends Controller
                               array('data' => $this->getFilmsService()->findAllByPerson($translit)));
     }
 
-    public function editElementAction(Request $request)
-    {
-        $id = $request->attributes->get('id');
-        $em = $this->getDoctrine()->getManager();
-        $content_obj = $em->getRepository('Sf2filmsFilmsBundle:Content')->findOneById($id);
-
-
-        $originalTags = array();
-        if ($content_obj->getTags() != null) {
-            // Create an array of the current Tag objects in the database
-            foreach ($content_obj->getTags() as $tag) $originalTags[] = $tag;
-        }
-
-        $form = $this->createForm(new FilmsType(), $content_obj, array("validation_groups" => array("EditContent")));
-
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-
-//            var_dump($content_obj->getIsPublish());
-//            exit;
-
-            // filter $originalTags to contain tags no longer present
-            foreach ($content_obj->getTags() as $tag) {
-                foreach ($originalTags as $key => $toDel) {
-                    if ($toDel->getId() === $tag->getId()) {
-                        unset($originalTags[$key]);
-                    }
-                }
-            }
-
-            $content_obj->setNameTranslit($this->get('films.transliter')->getTranslit($content_obj->getName()));
-            $content_obj->setDateUpdate(time());
-
-            $em = $this->getDoctrine()->getManager();
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('sf2films_films_all'));
-        }
-
-        return $this->render('Sf2filmsFilmsBundle:Default:films.html.twig', array(
-                'action' => $this->generateUrl('sf2films_films_edit', array('id' => $id)),
-                'form' => $form->createView())
-        );
-    }
-
     public function addElementAction(Request $request)
     {
         $content_obj = new Content();
@@ -103,10 +58,6 @@ class ContentController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-
-//            var_dump($content_obj->getIsPublish());
-//            exit;
-
 
             $content_obj->setIsPublish($content_obj->getIsPublish() == false ? 0 : $content_obj->getIsPublish());
 
@@ -125,6 +76,47 @@ class ContentController extends Controller
         return $this->render('Sf2filmsFilmsBundle:Default:films.html.twig', array(
             'action' => $this->generateUrl('sf2films_films_add'),
             'form' => $form->createView())
+        );
+    }
+
+    public function editElementAction(Request $request)
+    {
+        $id = $request->attributes->get('id');
+        $em = $this->getDoctrine()->getManager();
+        $content_obj = $em->getRepository('Sf2filmsFilmsBundle:Content')->findOneById($id);
+
+
+        $originalTags = array();
+        if ($content_obj->getTags() != null) {
+            // Create an array of the current Tag objects in the database
+            foreach ($content_obj->getTags() as $tag) $originalTags[] = $tag;
+        }
+
+        $form = $this->createForm(new FilmsType(), $content_obj, array("validation_groups" => array("EditContent")));
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            //remove the relationship
+            foreach ($originalTags as $tag) {
+                if (false === $content_obj->getTags()->contains($tag)) {
+                    //delete the Tag entirely
+                    $em->remove($tag);
+                }
+            }
+
+            $content_obj->setNameTranslit($this->get('films.transliter')->getTranslit($content_obj->getName()));
+            $content_obj->setDateUpdate(time());
+
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('sf2films_films_all'));
+        }
+
+        return $this->render('Sf2filmsFilmsBundle:Default:films.html.twig', array(
+                'action' => $this->generateUrl('sf2films_films_edit', array('id' => $id)),
+                'form' => $form->createView())
         );
     }
 

@@ -633,6 +633,7 @@ class Content {
     public function addTag(\Sf2films\FilmsBundle\Entity\Tag $tags)
     {
         $this->tags[] = $tags;
+        $tags->setContent($this);
     
         return $this;
     }
