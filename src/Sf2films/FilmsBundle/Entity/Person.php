@@ -1,9 +1,4 @@
 <?php
-/**
- * User: boss
- * Date: 03.11.13
- * Time: 12:54
- */
 
 namespace Sf2films\FilmsBundle\Entity;
 

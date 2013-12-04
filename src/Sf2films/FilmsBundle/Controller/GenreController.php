@@ -12,6 +12,7 @@ class GenreController extends Controller
     public function showAllAction()
     {
         $data = $this->getDoctrine()->getRepository('Sf2filmsFilmsBundle:Genre')->findAll();
+
         return $this->render('Sf2filmsFilmsBundle:Default:genre_all.html.twig', array('data' => $data));
     }
 

@@ -8,7 +8,6 @@ use Sf2films\FilmsBundle\Entity\Content;
 use Sf2films\FilmsBundle\Form\FilmsType;
 use Sf2films\FilmsBundle\Event\SitemapEvent;
 use Sf2films\FilmsBundle\Entity\Tag;
-//use Sf2films\FilmsBundle\Films;
 
 class ContentController extends Controller
 {
@@ -20,7 +19,6 @@ class ContentController extends Controller
 
     public function showAllAction($page)
     {
-
 //Use Service
         return $this->render('Sf2filmsFilmsBundle:Default:films_all.html.twig',
                               array('data' => $this->getFilmsService()->showAllFilms(), 'page' => $page));

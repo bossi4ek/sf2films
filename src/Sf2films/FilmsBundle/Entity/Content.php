@@ -531,7 +531,6 @@ class Content {
     }
 //===================================================================================
 
-
     /**
      * Set year
      *
@@ -606,6 +605,7 @@ class Content {
      */
     public function setAddinfo($addinfo)
     {
+        //Плохой код
         $this->addinfo = $addinfo;
         $this->setYear($addinfo['year']);
         $this->setDuration($addinfo['duration']);
@@ -617,6 +617,7 @@ class Content {
      */
     public function getAddinfo()
     {
+        //Плохой код
         $addinfo['year'] = $this->getYear();
         $addinfo['duration'] = $this->getDuration();
         $addinfo['budget'] = $this->getBudget();
