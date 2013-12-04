@@ -10,7 +10,6 @@ use Sf2films\FilmsBundle\Entity\Content;
 use Sf2films\FilmsBundle\Entity\Genre;
 use Sf2films\FilmsBundle\Entity\Person;
 use Sf2films\FilmsBundle\Transliter;
-use Sf2films\FilmsBundle\Form\GenderType;
 
 class LoadFilmsData implements FixtureInterface, OrderedFixtureInterface
 {
@@ -123,6 +122,7 @@ class LoadFilmsData implements FixtureInterface, OrderedFixtureInterface
         $films1->setIsPublish(1);
         $manager->persist($films1);
 //====================================================================
+
         $films_name = 'Два ствола';
         $films_description = 'Это история двух грабителей, которые на самом деле не те, кем кажутся. Один из них — агент из управления по борьбе с наркотиками, а другой — тайный агент разведки ВМС. Сами того не желая, они занимаются расследованием дел друг друга, а также воруют деньги у мафии. Через некоторое время героям придется украсть 50 миллионов долларов у ЦРУ.';
         $films2 = new Content();
@@ -142,6 +142,7 @@ class LoadFilmsData implements FixtureInterface, OrderedFixtureInterface
         $films2->setBudget(61000000);
         $films2->setIsPublish(1);
         $manager->persist($films2);
+
 //====================================================================
         $films_name = 'Росомаха Бессмертный';
         $films_description = 'Новая глава приключений Росомахи развернётся в Японии, где Логану предстоит выяснить, что острее - когти Росомахи или меч Серебряного Самурая.';
@@ -159,6 +160,7 @@ class LoadFilmsData implements FixtureInterface, OrderedFixtureInterface
         $films3->setBudget(120000000);
         $films3->setIsPublish(1);
         $manager->persist($films3);
+
 //====================================================================
         $films_name = 'Армагеддец';
         $films_description = 'Их подвиг был бы увековечен в книге рекордов Гиннеса, если бы они знали, что Гиннесс – это не только пиво. Пятеро друзей ставят себе высокую цель - организовать грандиозный забег по барам. Опасности подстерегают их на каждом шагу: красотка, от которой сходила с ума вся школа, так и тянет налево, в то время как справа надвигается таинственная угроза. В результате алкомарафон плавно переходит в реальный Армагеддец...';

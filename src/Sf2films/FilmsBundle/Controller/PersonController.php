@@ -12,6 +12,7 @@ class PersonController extends Controller
     public function showAllAction()
     {
         $data = $this->getDoctrine()->getRepository('Sf2filmsFilmsBundle:Person')->findAll();
+
         return $this->render('Sf2filmsFilmsBundle:Default:person_all.html.twig', array('data' => $data));
     }
 
