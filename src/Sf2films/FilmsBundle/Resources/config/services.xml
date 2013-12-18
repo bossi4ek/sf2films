@@ -8,6 +8,7 @@
             <parameter key="m">Мужской</parameter>
             <parameter key="f">Женский</parameter>
         </parameter>
+        <parameter key="element_per_page">3</parameter>
     </parameters>
 
     <services>
