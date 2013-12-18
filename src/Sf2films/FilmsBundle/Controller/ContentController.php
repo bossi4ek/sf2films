@@ -8,6 +8,8 @@ use Sf2films\FilmsBundle\Entity\Content;
 use Sf2films\FilmsBundle\Form\FilmsType;
 use Sf2films\FilmsBundle\Event\SitemapEvent;
 use Sf2films\FilmsBundle\Entity\Tag;
+use Pagerfanta\Pagerfanta;
+use Pagerfanta\Adapter\ArrayAdapter;
 
 class ContentController extends Controller
 {
@@ -17,11 +19,38 @@ class ContentController extends Controller
         return $this->get('films');
     }
 
-    public function showAllAction($page)
+    public function showAllAction(Request $request)
     {
 //Use Service
+
+        $data = $this->getFilmsService()->showAllFilms();
+
+        $page = $request->get('page');
+
+        $adapter = new ArrayAdapter($data);
+        $pagerfanta = new Pagerfanta($adapter);
+        if(!$page) {
+            $page = 1;
+        }
+
+        //500 Internal Server Error - OutOfRangeCurrentPageException
+        //Page "2" does not exist. The currentPage must be inferior to "1"
+//        try {
+//            $pagerfanta->setCurrentPage($page);
+//        } catch (NotValidCurrentPageException $e) {
+//            throw new NotFoundHttpException();
+//        }
+
+        $pagerfanta->setMaxPerPage($this->container->getParameter('element_per_page'));
+        $pagerfanta->setCurrentPage($page);
+        $data = $pagerfanta->getCurrentPageResults();
+
         return $this->render('Sf2filmsFilmsBundle:Default:films_all.html.twig',
-                              array('data' => $this->getFilmsService()->showAllFilms(), 'page' => $page));
+                              array(
+                                  'data' => $data,
+                                  'page' => $page,
+                                  'pagerfanta' => $pagerfanta
+                              ));
 
 //Use Entity Repository
 //        $em = $this->getDoctrine()->getManager();
