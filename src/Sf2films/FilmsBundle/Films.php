@@ -18,9 +18,9 @@ class Films {
         return $this->repo->findAllFilms();
     }
 
-//Get one Element by translit
-    public function findOneByTranslit($translit){
-        return $this->repo->findOneByTranslit($translit);
+//Get one Element by slug
+    public function findOneBySlug($slug){
+        return $this->repo->findOneBySlug($slug);
     }
 
 //Get films by genre

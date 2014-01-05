@@ -13,7 +13,9 @@ class ContentRepository extends EntityRepository
             ->createQuery('
                 SELECT content
                 FROM Sf2filmsFilmsBundle:Content content
-                ORDER BY content.date_create DESC');
+                ORDER BY content.created DESC');
+
+        return $query;
 
         try {
             return $query->getResult();
@@ -22,14 +24,14 @@ class ContentRepository extends EntityRepository
         }
     }
 
-    public function findOneByTranslit($translit)
+    public function findOneBySlug($slug)
     {
         $query = $this->getEntityManager()
             ->createQuery('
                 SELECT content
                 FROM Sf2filmsFilmsBundle:Content content
-                WHERE content.name_translit = :translit'
-            )->setParameter('translit', $translit);
+                WHERE content.slug = :slug'
+            )->setParameter('slug', $slug);
 
         try {
             return $query->getSingleResult();
@@ -46,8 +48,10 @@ class ContentRepository extends EntityRepository
                 FROM Sf2filmsFilmsBundle:Content content
                 LEFT JOIN content.genres genre
                 WHERE genre.name_translit = :translit
-                ORDER BY content.date_create DESC'
+                ORDER BY content.created DESC'
             )->setParameter('translit', $translit);
+
+        return $query;
 
         try {
             return $query->getResult();
@@ -64,8 +68,10 @@ class ContentRepository extends EntityRepository
                 FROM Sf2filmsFilmsBundle:Content content
                 LEFT JOIN content.persons person
                 WHERE person.name_translit = :translit
-                ORDER BY content.date_create DESC'
+                ORDER BY content.created DESC'
             )->setParameter('translit', $translit);
+
+        return $query;
 
         try {
             return $query->getResult();

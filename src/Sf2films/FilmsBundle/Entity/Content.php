@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Gedmo\Mapping\Annotation as Gedmo; // Подключение Gedmo
 
 /**
  * @ORM\Entity(repositoryClass="Sf2films\FilmsBundle\Repository\ContentRepository")
@@ -33,24 +34,33 @@ class Content {
     protected $name;
 
     /**
-     * @ORM\Column()
+     * @Gedmo\Slug(fields={"name"}, separator="_")
+     * @ORM\Column(name="slug", type="string", length=255, unique=true)
      */
-    protected $name_translit;
+
+    private $slug;
+
+    /**
+     * @var datetime $created
+     *
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime")
+     */
+    private $created;
+
+    /**
+     * @var datetime $updated
+     *
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(type="datetime")
+     */
+    private $updated;
 
     /**
      * @ORM\Column(type="text")
      */
     protected $description;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    protected $date_create;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    protected $date_update;
 
     /**
      * @ORM\Column(type="smallint", options={"default" = 0})
@@ -165,26 +175,72 @@ class Content {
     }
 
     /**
-     * Set name_translit
+     * Set slug
      *
-     * @param string $nameTranslit
+     * @param string $slug
      * @return Content
      */
-    public function setNameTranslit($nameTranslit)
+    public function setSlug($slug)
     {
-        $this->name_translit = $nameTranslit;
-    
+        $this->slug = $slug;
+
         return $this;
     }
 
     /**
-     * Get name_translit
+     * Get slug
      *
-     * @return string 
+     * @return string
      */
-    public function getNameTranslit()
+    public function getSlug()
     {
-        return $this->name_translit;
+        return $this->slug;
+    }
+
+    /**
+     * Set created
+     *
+     * @param \DateTime $created
+     * @return Content
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+
+        return $this;
+    }
+
+    /**
+     * Get created
+     *
+     * @return \DateTime
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * Set updated
+     *
+     * @param \DateTime $updated
+     * @return Content
+     */
+    public function setUpdated($updated)
+    {
+        $this->updated = $updated;
+
+        return $this;
+    }
+
+    /**
+     * Get updated
+     *
+     * @return \DateTime
+     */
+    public function getUpdated()
+    {
+        return $this->updated;
     }
 
     /**
@@ -208,52 +264,6 @@ class Content {
     public function getDescription()
     {
         return $this->description;
-    }
-
-    /**
-     * Set date_create
-     *
-     * @param integer $dateCreate
-     * @return Content
-     */
-    public function setDateCreate($dateCreate)
-    {
-        $this->date_create = $dateCreate;
-    
-        return $this;
-    }
-
-    /**
-     * Get date_create
-     *
-     * @return integer 
-     */
-    public function getDateCreate()
-    {
-        return $this->date_create;
-    }
-
-    /**
-     * Set date_update
-     *
-     * @param integer $dateUpdate
-     * @return Content
-     */
-    public function setDateUpdate($dateUpdate)
-    {
-        $this->date_update = $dateUpdate;
-    
-        return $this;
-    }
-
-    /**
-     * Get date_update
-     *
-     * @return integer 
-     */
-    public function getDateUpdate()
-    {
-        return $this->date_update;
     }
 
     /**

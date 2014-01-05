@@ -25,7 +25,7 @@ class Tag {
     protected $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Content", inversedBy="tags")
+     * @ORM\ManyToOne(targetEntity="Content", inversedBy="tags", cascade={"persist"})
      * @ORM\JoinColumn(name="content_id", referencedColumnName="id")
      **/
     private $content;
@@ -69,5 +69,28 @@ class Tag {
     public function __toString()
     {
         return $this->name;
+    }
+
+    /**
+     * Set content
+     *
+     * @param \Sf2films\FilmsBundle\Entity\Content $content
+     * @return Tag
+     */
+    public function setContent(\Sf2films\FilmsBundle\Entity\Content $content = null)
+    {
+        $this->content = $content;
+    
+        return $this;
+    }
+
+    /**
+     * Get content
+     *
+     * @return \Sf2films\FilmsBundle\Entity\Content 
+     */
+    public function getContent()
+    {
+        return $this->content;
     }
 }

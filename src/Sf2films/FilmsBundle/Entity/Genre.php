@@ -131,4 +131,27 @@ class Genre {
     {
         return $this->name;
     }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Genre
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+    
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string 
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
 }
