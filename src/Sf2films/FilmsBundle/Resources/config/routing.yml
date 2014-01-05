@@ -21,12 +21,14 @@ sf2films_films_del:
     defaults: { _controller: Sf2filmsFilmsBundle:Content:delElement }
 
 sf2films_films_element:
-    pattern:  /films/{translit}
+    pattern:  /films/{slug}
     defaults: { _controller: Sf2filmsFilmsBundle:Content:showElement }
 
 sf2films_films_by_genre:
-    pattern:  /films/genre/{translit}
-    defaults: { _controller: Sf2filmsFilmsBundle:Content:showAllByGenre }
+    pattern:  /films/genre/{translit}/{page}
+    defaults: { _controller: Sf2filmsFilmsBundle:Content:showAllByGenre, page: 1 }
+    requirements:
+        page:  \d+
 
 sf2films_films_by_person:
     pattern:  /films/person/{translit}

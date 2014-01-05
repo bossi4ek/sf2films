@@ -10,6 +10,7 @@ use Sf2films\FilmsBundle\Event\SitemapEvent;
 use Sf2films\FilmsBundle\Entity\Tag;
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\Adapter\ArrayAdapter;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
 
 class ContentController extends Controller
 {
@@ -27,7 +28,9 @@ class ContentController extends Controller
 
         $page = $request->get('page');
 
-        $adapter = new ArrayAdapter($data);
+//        $adapter = new ArrayAdapter($data);
+        $adapter = new DoctrineORMAdapter($data);
+
         $pagerfanta = new Pagerfanta($adapter);
         if(!$page) {
             $page = 1;
@@ -58,23 +61,69 @@ class ContentController extends Controller
 //        return $this->render('Sf2filmsFilmsBundle:Default:films_all.html.twig', array('data' => $data, 'page' => $page));
     }
 
-    public function showElementAction($translit)
+    public function showElementAction($slug)
     {
 
         return $this->render('Sf2filmsFilmsBundle:Default:films_element.html.twig',
-                              array('data' => $this->getFilmsService()->findOneByTranslit($translit)));
+                              array('data' => $this->getFilmsService()->findOneBySlug($slug)));
     }
 
     public function showAllByGenreAction($translit)
     {
+        $data = $this->getFilmsService()->findAllByGenre($translit);
+
+        $page = $this->getRequest()->get('page');
+
+//        $adapter = new ArrayAdapter($data);
+        $adapter = new DoctrineORMAdapter($data);
+
+        $pagerfanta = new Pagerfanta($adapter);
+        if(!$page) {
+            $page = 1;
+        }
+
+        $pagerfanta->setMaxPerPage($this->container->getParameter('element_per_page'));
+        $pagerfanta->setCurrentPage($page);
+        $data = $pagerfanta->getCurrentPageResults();
+
         return $this->render('Sf2filmsFilmsBundle:Default:films_all.html.twig',
-                              array('data' => $this->getFilmsService()->findAllByGenre($translit)));
+            array(
+                'data' => $data,
+                'page' => $page,
+                'pagerfanta' => $pagerfanta
+            ));
+
+//        return $this->render('Sf2filmsFilmsBundle:Default:films_all.html.twig',
+//                              array('data' => $this->getFilmsService()->findAllByGenre($translit)));
     }
 
     public function showAllByPersonAction($translit)
     {
+        $data = $this->getFilmsService()->findAllByPerson($translit);
+
+        $page = $this->getRequest()->get('page');
+
+//        $adapter = new ArrayAdapter($data);
+        $adapter = new DoctrineORMAdapter($data);
+
+        $pagerfanta = new Pagerfanta($adapter);
+        if(!$page) {
+            $page = 1;
+        }
+
+        $pagerfanta->setMaxPerPage($this->container->getParameter('element_per_page'));
+        $pagerfanta->setCurrentPage($page);
+        $data = $pagerfanta->getCurrentPageResults();
+
         return $this->render('Sf2filmsFilmsBundle:Default:films_all.html.twig',
-                              array('data' => $this->getFilmsService()->findAllByPerson($translit)));
+            array(
+                'data' => $data,
+                'page' => $page,
+                'pagerfanta' => $pagerfanta
+            ));
+
+//        return $this->render('Sf2filmsFilmsBundle:Default:films_all.html.twig',
+//                              array('data' => $this->getFilmsService()->findAllByPerson($translit)));
     }
 
     public function addElementAction(Request $request)
@@ -88,9 +137,6 @@ class ContentController extends Controller
 
             $content_obj->setIsPublish($content_obj->getIsPublish() == false ? 0 : $content_obj->getIsPublish());
 
-            $content_obj->setNameTranslit($this->get('films.transliter')->getTranslit($content_obj->getName()));
-            $content_obj->setDateCreate(time());
-            $content_obj->setDateUpdate(time());
 //            $content_obj->upload();
 
             $em = $this->getDoctrine()->getManager();
@@ -132,9 +178,6 @@ class ContentController extends Controller
                     $em->remove($tag);
                 }
             }
-
-            $content_obj->setNameTranslit($this->get('films.transliter')->getTranslit($content_obj->getName()));
-            $content_obj->setDateUpdate(time());
 
             $em = $this->getDoctrine()->getManager();
             $em->flush();

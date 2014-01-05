@@ -3,7 +3,7 @@
     {% for page in pages if page.path %}
         <url>
             <loc>{{ url('sf2films_homepage')}}{{ page.path }}</loc>
-            <lastmod>{{ page.date_update|date('Y-m-d') }}</lastmod>
+            <lastmod>{{ page.updated|date('Y-m-d') }}</lastmod>
             <changefreq>monthly</changefreq>
             <priority>0.8</priority>
         </url>

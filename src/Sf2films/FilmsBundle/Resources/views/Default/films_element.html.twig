@@ -4,14 +4,14 @@
     <div id="allPost" class="postBox">
         <div class="panel panel-default" id_content="{{ data.id }}">
             <div class="post_poster">
-                <a href="{{ path('sf2films_films_element', {'translit': data.nameTranslit}) }}">
+                <a href="{{ path('sf2films_films_element', {'slug': data.slug}) }}">
                     <img src="{% if data.posterImg %} {{ data.posterImg }} {% else %} /uploads/poster/not_img.jpg {% endif %}" class="poster_img"/>
                 </a>
             </div>
             <div class="panel-body post_body">
                 <div style="overflow: hidden">
                     <div style="float: left; font-size: 18px;">
-                        <a href="{{ path('sf2films_films_element', {'translit': data.nameTranslit}) }}">
+                        <a href="{{ path('sf2films_films_element', {'slug': data.slug}) }}">
                             {{ data.name }} {% if data.isPublish == 0 %}<span style="color: red;">(неопубликованный)</span>{% endif %}
                         </a>
                     </div>

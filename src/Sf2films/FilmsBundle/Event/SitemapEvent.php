@@ -8,11 +8,11 @@ class SitemapEvent extends Event{
 
     private $pages = array();
 
-    public function addPage($path, $date_update)
+    public function addPage($path, $updated)
     {
         $this->pages[] = array(
             'path' => $path,
-            'date_update' => $date_update
+            'updated' => $updated
         );
     }
 

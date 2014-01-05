@@ -29,8 +29,8 @@
                 {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
             </div>
             <div>
-                <img src="{{ content.posterImg }}"/>
                 {{ form_label(form.file, 'Постер') }}
+                <img src="{% if content.posterImg %} {{ content.posterImg }} {% else %} /uploads/poster/not_img.jpg {% endif %}" class="poster_img"/>
                 {{ form_errors(form.file) }}
                 {{ form_widget(form.file, {'attr': {'novalidate': 'novalidate'}}) }}
             </div>

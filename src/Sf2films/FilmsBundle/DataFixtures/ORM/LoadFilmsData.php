@@ -107,11 +107,8 @@ class LoadFilmsData implements FixtureInterface, OrderedFixtureInterface
         $films_description = 'В начале апреля 2009 года, близ берегов Африки, несколько сомалийских пиратов атакуют и пытаются захватить массивный контейнеровоз MV Maersk Alabama. Команда корабля активно сопротивляется и в конце концов не даёт взять себя в плен. Захватчики вынуждены ретироваться и покинуть судно на небольшом катере, прихватив с собой немолодого капитана Ричарда Филлипса...';
         $films1 = new Content();
         $films1->setName($films_name);
-        $films1->setNameTranslit($translit->getTranslit($films_name));
         $films1->setPosterImg("1.jpg");
         $films1->setDescription($films_description);
-        $films1->setDateCreate(time());
-        $films1->setDateUpdate(time() + 1);
         $films1->addGenre($genre1);
         $films1->addGenre($genre2);
         $films1->addPerson($person1);
@@ -127,11 +124,8 @@ class LoadFilmsData implements FixtureInterface, OrderedFixtureInterface
         $films_description = 'Это история двух грабителей, которые на самом деле не те, кем кажутся. Один из них — агент из управления по борьбе с наркотиками, а другой — тайный агент разведки ВМС. Сами того не желая, они занимаются расследованием дел друг друга, а также воруют деньги у мафии. Через некоторое время героям придется украсть 50 миллионов долларов у ЦРУ.';
         $films2 = new Content();
         $films2->setName($films_name);
-        $films2->setNameTranslit($translit->getTranslit($films_name));
         $films2->setPosterImg("2.jpg");
         $films2->setDescription($films_description);
-        $films2->setDateCreate(time());
-        $films2->setDateUpdate(time() + 1);
         $films2->addGenre($genre1);
         $films2->addGenre($genre2);
         $films2->addGenre($genre3);
@@ -148,11 +142,8 @@ class LoadFilmsData implements FixtureInterface, OrderedFixtureInterface
         $films_description = 'Новая глава приключений Росомахи развернётся в Японии, где Логану предстоит выяснить, что острее - когти Росомахи или меч Серебряного Самурая.';
         $films3 = new Content();
         $films3->setName($films_name);
-        $films3->setNameTranslit($translit->getTranslit($films_name));
         $films3->setPosterImg("3.jpg");
         $films3->setDescription($films_description);
-        $films3->setDateCreate(time());
-        $films3->setDateUpdate(time() + 1);
         $films3->addGenre($genre2);
         $films3->addPerson($person1);
         $films3->setYear(2013);
@@ -166,11 +157,8 @@ class LoadFilmsData implements FixtureInterface, OrderedFixtureInterface
         $films_description = 'Их подвиг был бы увековечен в книге рекордов Гиннеса, если бы они знали, что Гиннесс – это не только пиво. Пятеро друзей ставят себе высокую цель - организовать грандиозный забег по барам. Опасности подстерегают их на каждом шагу: красотка, от которой сходила с ума вся школа, так и тянет налево, в то время как справа надвигается таинственная угроза. В результате алкомарафон плавно переходит в реальный Армагеддец...';
         $films4 = new Content();
         $films4->setName($films_name);
-        $films4->setNameTranslit($translit->getTranslit($films_name));
         $films4->setPosterImg("4.jpg");
         $films4->setDescription($films_description);
-        $films4->setDateCreate(time());
-        $films4->setDateUpdate(time() + 1);
         $films4->addGenre($genre1);
         $films4->addGenre($genre2);
         $films4->addGenre($genre3);
