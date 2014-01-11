@@ -1,0 +1,3 @@
+sf2films_user_homepage:
+    pattern:  /hello2/{name}
+    defaults: { _controller: Sf2filmsUserBundle:Default:index }

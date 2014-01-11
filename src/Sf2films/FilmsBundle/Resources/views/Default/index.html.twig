@@ -27,7 +27,17 @@
                     <li {% if app.request.attributes.get('_route') == "sf2films_films_all" %}class="active"{% endif %}><a href="{{ path('sf2films_films_all')}}">Фильмы</a></li>
                     <li {% if app.request.attributes.get('_route') == "sf2films_films_genre" %}class="active"{% endif %}><a href="{{ path('sf2films_films_genre')}}">Жанры</a></li>
                     <li {% if app.request.attributes.get('_route') == "sf2films_films_person" %}class="active"{% endif %}><a href="{{ path('sf2films_films_person')}}">Актеры</a></li>
-                    <li {% if app.request.attributes.get('_route') == "sf2films_sitemap" %}class="active"{% endif %}><a href="{{ path('sf2films_sitemap')}}" style="float: right;">Карта сайта</a></li>                </ul>
+                    <li {% if app.request.attributes.get('_route') == "sf2films_sitemap" %}class="active"{% endif %}><a href="{{ path('sf2films_sitemap')}}">Карта сайта</a></li>
+                </ul>
+
+                <ul class="nav navbar-nav" style="float: right;">
+                    {% if app.user.username is defined %}
+                        <li><p>Username: {{ app.user.username }}</p></li>
+                        <li {% if app.request.attributes.get('_route') == "fos_user_security_logout" %}class="active"{% endif %}><a href="{{ path('fos_user_security_logout')}}">Выйти</a></li>
+                    {% else %}
+                        <li {% if app.request.attributes.get('_route') == "fos_user_security_login" %}class="active"{% endif %}><a href="{{ path('fos_user_security_login')}}">Войти</a></li>
+                    {% endif %}
+                </ul>
             </div>
         </nav>
     </div>

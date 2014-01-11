@@ -1,11 +1,13 @@
 {% extends 'Sf2filmsFilmsBundle:Default:index.html.twig' %}
 
 {% block content_main %}
-    <div style="text-align: center;">
-        <a href="{{ path('sf2films_films_add') }}">
-            <button id="add_films" type="submit" class="btn btn-primary"/>Добавить фильм</button>
-        </a>
-    </div>
+    {% if is_granted('ROLE_ADMIN') %}
+        <div style="text-align: center;">
+            <a href="{{ path('sf2films_films_add') }}">
+                <button id="add_films" type="submit" class="btn btn-primary"/>Добавить фильм</button>
+            </a>
+        </div>
+    {% endif %}
     {#Страница с фильмами (старница {{ page }})#}
     <div style="font-size: 16px;"><label>Все фильмы</label></div>
     <div id="allPost" class="postBox">
@@ -23,14 +25,16 @@
                                 {{ content_data.name }} {% if content_data.isPublish == 0 %}<span style="color: red;">(неопубликованный)</span>{% endif %}
                             </a>
                         </div>
-                        <div style="float: right;">
-                            <a href="{{ path('sf2films_films_edit', {'id': content_data.id}) }}">
-                                <span class="glyphicon glyphicon-edit post_edit" title="Редактировать"></span>
-                            </a>
-                            <a href="{{ path('sf2films_films_del', {'id': content_data.id}) }}">
-                                <span class="glyphicon glyphicon-remove post_delete" title="Удалить"></span>
-                            </a>
-                        </div>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <div style="float: right;">
+                                <a href="{{ path('sf2films_films_edit', {'id': content_data.id}) }}">
+                                    <span class="glyphicon glyphicon-edit post_edit" title="Редактировать"></span>
+                                </a>
+                                <a href="{{ path('sf2films_films_del', {'id': content_data.id}) }}">
+                                    <span class="glyphicon glyphicon-remove post_delete" title="Удалить"></span>
+                                </a>
+                            </div>
+                        {% endif %}
                     </div>
 
                     {% if content_data.genres|length > 0 %}

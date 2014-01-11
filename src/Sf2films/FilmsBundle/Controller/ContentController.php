@@ -22,6 +22,10 @@ class ContentController extends Controller
 
     public function showAllAction(Request $request)
     {
+
+//        $user = $this->getUser();
+//        echo $user;
+
 //Use Service
 
         $data = $this->getFilmsService()->showAllFilms();
