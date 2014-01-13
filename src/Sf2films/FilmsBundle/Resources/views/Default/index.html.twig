@@ -32,7 +32,7 @@
 
                 <ul class="nav navbar-nav" style="float: right;">
                     {% if app.user.username is defined %}
-                        <li><p>Username: {{ app.user.username }}</p></li>
+                        <li><a href="{{ path('fos_user_profile_show')}}">{{ app.user.username }}</a></li>
                         <li {% if app.request.attributes.get('_route') == "fos_user_security_logout" %}class="active"{% endif %}><a href="{{ path('fos_user_security_logout')}}">Выйти</a></li>
                     {% else %}
                         <li {% if app.request.attributes.get('_route') == "fos_user_security_login" %}class="active"{% endif %}><a href="{{ path('fos_user_security_login')}}">Войти</a></li>

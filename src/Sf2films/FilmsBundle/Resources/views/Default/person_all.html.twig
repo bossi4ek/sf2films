@@ -1,31 +1,37 @@
 {% extends 'Sf2filmsFilmsBundle:Default:index.html.twig' %}
 
 {% block content_main %}
-    <div style="text-align: center;">
-        <a href="{{ path('sf2films_films_person_add') }}">
-            <button id="add_genre" type="submit" class="btn btn-primary"/>Добавить актера</button>
-        </a>
-    </div>
+    {% if is_granted('ROLE_ADMIN') %}
+        <div style="text-align: center;">
+            <a href="{{ path('sf2films_films_person_add') }}">
+                <button id="add_genre" type="submit" class="btn btn-primary"/>Добавить актера</button>
+            </a>
+        </div>
+    {% endif %}
 
     <div style="font-size: 16px;"><label>Все актеры</label></div>
     <div id="allPost" class="postBox">
         {% for person_data in data if person_data.name %}
-            <div class="panel panel-default" id_genre="{{ person_data.id }}">
-                <div class="panel-body post_body">
-                    <div style="float: left;">
-                        <p style="font-weight: bold;">{{ person_data.name }} {% if person_data.isPublish == 0 %}<span style="color: red;">(неопубликованный)</span>{% endif %}</p>
-                        <p>Дата рождения: {{ person_data.dateBirth|date('d-m-Y') }}</p>
-                    </div>
-                    <div style="float: right;">
-                        <a href="{{ path('sf2films_films_person_edit', {'id': person_data.id}) }}">
-                            <span class="glyphicon glyphicon-edit post_edit"></span>
-                        </a>
-                        <a href="{{ path('sf2films_films_person_del', {'id': person_data.id}) }}">
-                            <span class="glyphicon glyphicon-remove post_delete"></span>
-                        </a>
+            {% if (is_granted('ROLE_ADMIN') or person_data.isPublish != 0) %}
+                <div class="panel panel-default" id_genre="{{ person_data.id }}">
+                    <div class="panel-body post_body">
+                        <div style="float: left;">
+                            <p style="font-weight: bold;">{{ person_data.name }} {% if person_data.isPublish == 0 %}<span style="color: red;">(неопубликованный)</span>{% endif %}</p>
+                            <p>Дата рождения: {{ person_data.dateBirth|date('d-m-Y') }}</p>
+                        </div>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <div style="float: right;">
+                                <a href="{{ path('sf2films_films_person_edit', {'id': person_data.id}) }}">
+                                    <span class="glyphicon glyphicon-edit post_edit"></span>
+                                </a>
+                                <a href="{{ path('sf2films_films_person_del', {'id': person_data.id}) }}">
+                                    <span class="glyphicon glyphicon-remove post_delete"></span>
+                                </a>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
-            </div>
+            {% endif %}
         {% else %}
             <div class="not_message"><center>Нет записей</center></div>
         {% endfor %}

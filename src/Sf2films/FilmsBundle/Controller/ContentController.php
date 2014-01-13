@@ -11,6 +11,7 @@ use Sf2films\FilmsBundle\Entity\Tag;
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class ContentController extends Controller
 {
@@ -28,7 +29,12 @@ class ContentController extends Controller
 
 //Use Service
 
-        $data = $this->getFilmsService()->showAllFilms();
+        if ($this->get('security.context')->isGranted('ROLE_ADMIN') === true) {
+            $data = $this->getFilmsService()->showAllFilms();
+        }
+        else {
+            $data = $this->getFilmsService()->showAllFilmsIsPublish();
+        }
 
         $page = $request->get('page');
 
@@ -132,6 +138,10 @@ class ContentController extends Controller
 
     public function addElementAction(Request $request)
     {
+        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedException();
+        }
+
         $content_obj = new Content();
         $form = $this->createForm(new FilmsType(), $content_obj, array("validation_groups" => array("AddContent")));
 
@@ -159,6 +169,10 @@ class ContentController extends Controller
 
     public function editElementAction(Request $request)
     {
+        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedException();
+        }
+
         $id = $request->attributes->get('id');
         $em = $this->getDoctrine()->getManager();
         $content_obj = $em->getRepository('Sf2filmsFilmsBundle:Content')->findOneById($id);
@@ -198,6 +212,10 @@ class ContentController extends Controller
 
     public function delElementAction($id)
     {
+        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedException();
+        }
+
         $em = $this->getDoctrine()->getManager();
         $content = $em->getRepository('Sf2filmsFilmsBundle:Content')->findOneById($id);
         $em->remove($content);
