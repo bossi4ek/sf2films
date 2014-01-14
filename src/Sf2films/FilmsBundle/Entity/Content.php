@@ -133,11 +133,18 @@ class Content {
      **/
     private $tags;
 
+    /**
+     * ORM\@ManyToMany(targetEntity="Sf2films\UserBundle\Entity\User", mappedBy="contents")
+     **/
+    private $users;
+
 
     public function __construct() {
         $this->genres = new ArrayCollection();
         $this->persons = new ArrayCollection();
         $this->tags = new ArrayCollection();
+
+        $this->users = new ArrayCollection();
     }
 
 

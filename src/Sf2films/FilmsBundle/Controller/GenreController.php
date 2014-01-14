@@ -26,7 +26,7 @@ class GenreController extends Controller
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException();
         }
-        
+
         $id = $request->attributes->get('id');
         $em = $this->getDoctrine()->getManager();
         $obj = $em->getRepository('Sf2filmsFilmsBundle:Genre')->findOneById($id);

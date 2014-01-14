@@ -10,4 +10,10 @@ class DefaultController extends Controller
     {
         return $this->render('Sf2filmsUserBundle:Security:login.html.twig', array('name' => $name));
     }
+
+    public function showMyContent(Request $request)
+    {
+
+    }
+
 }
