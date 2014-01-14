@@ -79,6 +79,11 @@
                             {{ content_data.description }}
                         </div>
                     </div>
+                    {% if is_granted('ROLE_USER') %}
+                        <div style="text-align: right; padding: 5px;">
+                            <button type="submit" class="btn btn-primary btn-success btn-xs add-mycontent-js" data-id="{{ content_data.id }}"/>Добавить в мои</button>
+                        </div>
+                    {% endif %}
                 </div>
             {% endif %}
         {% else %}

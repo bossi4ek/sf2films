@@ -1,0 +1,9 @@
+{% extends "Sf2filmsUserBundle::layout.html.twig" %}
+
+{% block fos_user_content %}
+    <div class="fos_user_user_show">
+        <p>{{ 'Логин'|trans }}: {{ user.username }}</p>
+        <p>{{ 'Email'|trans }}: {{ user.email }}</p>
+        <p><a class="label label-info" href="{{ path('sf2films_user_mycontent')}}">Мой контент</a></p>
+    </div>
+{% endblock fos_user_content %}

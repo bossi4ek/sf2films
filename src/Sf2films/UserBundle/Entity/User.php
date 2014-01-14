@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Sf2films\UserBundle\Repository\UserRepository")
  * @ORM\Table(name="user")
  */
 class User extends BaseUser

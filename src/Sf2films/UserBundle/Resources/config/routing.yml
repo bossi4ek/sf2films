@@ -1,3 +1,15 @@
 sf2films_user_mycontent:
-    pattern:  /mycontent
-    defaults: { _controller: Sf2filmsUserBundle:Default:index }
+    pattern:  /mycontent/{page}
+    defaults: { _controller: Sf2filmsUserBundle:Default:showMyContent, page: 1 }
+    requirements:
+        page:  \d+
+
+sf2films_user_mycontent_add:
+    pattern:  /mycontent/add
+    defaults: { _controller: Sf2filmsUserBundle:Default:addMyContent }
+    methods:  [POST]
+
+sf2films_user_mycontent_del:
+    pattern:  /mycontent/del
+    defaults: { _controller: Sf2filmsUserBundle:Default:delMyContent }
+    methods:  [POST]

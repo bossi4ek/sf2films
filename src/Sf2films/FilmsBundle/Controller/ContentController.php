@@ -74,8 +74,11 @@ class ContentController extends Controller
     public function showElementAction($slug)
     {
 
+        $data = $this->getFilmsService()->findOneBySlug($slug);
+        var_dump($data);
+
         return $this->render('Sf2filmsFilmsBundle:Default:films_element.html.twig',
-                              array('data' => $this->getFilmsService()->findOneBySlug($slug)));
+                              array('data' => $data));
     }
 
     public function showAllByGenreAction($translit)
