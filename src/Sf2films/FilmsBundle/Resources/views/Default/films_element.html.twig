@@ -80,6 +80,14 @@
                     {{ data.description }}
                 </div>
             </div>
+            {% if is_granted('ROLE_USER') %}
+                <div style="text-align: right; padding: 5px;">
+                    <button type="submit" class="btn btn-primary btn-success btn-xs add-mycontent-js" data-id="{{ data.id }}"/>Добавить в мои</button>
+                </div>
+                <div style="text-align: right; padding: 5px; display: none;">
+                    <button type="submit" class="btn btn-primary btn-danger btn-xs del-mycontent-js" data-id="{{ data.id }}"/>Удалить из моих</button>
+                </div>
+            {% endif %}
         </div>
     </div>
 

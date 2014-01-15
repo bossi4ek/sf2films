@@ -30,6 +30,9 @@
                             {% endif %}
                         </div>
                         {% if is_granted('ROLE_USER') %}
+                            <div style="padding-top: 25px; display: none;">
+                                <button type="submit" class="btn btn-primary btn-success btn-xs add-mycontent-js" data-id="{{ content_data.id }}"/>Добавить в мои</button>
+                            </div>
                             <div style="padding-top: 25px;">
                                 <button type="submit" class="btn btn-primary btn-danger btn-xs del-mycontent-js" data-id="{{ content_data.id }}"/>Удалить из моих</button>
                             </div>

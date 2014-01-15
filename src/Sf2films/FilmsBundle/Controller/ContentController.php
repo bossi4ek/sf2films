@@ -75,7 +75,7 @@ class ContentController extends Controller
     {
 
         $data = $this->getFilmsService()->findOneBySlug($slug);
-        var_dump($data);
+//        var_dump($data);
 
         return $this->render('Sf2filmsFilmsBundle:Default:films_element.html.twig',
                               array('data' => $data));

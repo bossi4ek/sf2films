@@ -14,6 +14,8 @@ addMycontent = function(obj) {
 //                $(obj).click(function(){
 //                   delMycontent(obj);
 //                });
+                $(obj).parent().hide();
+                $(obj).parent().next().show();
             }
             else {
                 alert("Ошибка добавления");
@@ -33,6 +35,8 @@ delMycontent = function(obj) {
             if (response == 1) {
                 alert("Успешно удален");
 //                $(".post_element[id_content='" + $(obj).data('id') + "']").remove();
+                $(obj).parent().hide();
+                $(obj).parent().prev().show();
             }
             else {
                 alert("Ошибка удаления");
