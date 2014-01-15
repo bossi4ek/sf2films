@@ -71,3 +71,9 @@ swiftmailer:
     username:  %mailer_user%
     password:  %mailer_password%
     spool:     { type: memory }
+
+#Configure the FOSUserBundle
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: Sf2films\UserBundle\Entity\User

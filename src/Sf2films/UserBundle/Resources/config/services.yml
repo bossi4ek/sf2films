@@ -1,0 +1,7 @@
+parameters:
+#    sf2films_user.example.class: Sf2films\UserBundle\Example
+
+services:
+#    sf2films_user.example:
+#        class: %sf2films_user.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

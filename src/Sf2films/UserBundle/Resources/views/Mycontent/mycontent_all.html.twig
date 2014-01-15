@@ -1,0 +1,135 @@
+{% extends 'Sf2filmsFilmsBundle:Default:index.html.twig' %}
+
+{% block content_main %}
+    <div style="font-size: 16px;"><label>Фильмы пользователя {{ app.user.username }}</label></div>
+    <div id="allPost" class="postBox">
+        {% for content_data in data if content_data.name %}
+            {% if (is_granted('ROLE_ADMIN') or content_data.isPublish != 0) %}
+                <div class="panel panel-default post_element" id_content="{{ content_data.id }}">
+                    <div class="post_poster">
+                        <a href="{{ path('sf2films_films_element', {'slug': content_data.slug}) }}">
+                            <img src="{% if content_data.posterImg %} {{ content_data.posterImg }} {% else %} /uploads/poster/not_img.jpg {% endif %}" class="poster_img" style="width: 50px;"/>
+                        </a>
+                    </div>
+                    <div class="panel-body post_body">
+                        <div style="overflow: hidden">
+                            <div style="float: left; font-size: 18px;">
+                                <a href="{{ path('sf2films_films_element', {'slug': content_data.slug}) }}">
+                                    {{ content_data.name }} {% if content_data.isPublish == 0 %}<span style="color: red;">(неопубликованный)</span>{% endif %}
+                                </a>
+                            </div>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <div style="float: right;">
+                                    <a href="{{ path('sf2films_films_edit', {'id': content_data.id}) }}">
+                                        <span class="glyphicon glyphicon-edit post_edit" title="Редактировать"></span>
+                                    </a>
+                                    <a href="{{ path('sf2films_films_del', {'id': content_data.id}) }}">
+                                        <span class="glyphicon glyphicon-remove post_delete" title="Удалить"></span>
+                                    </a>
+                                </div>
+                            {% endif %}
+                        </div>
+                        {% if is_granted('ROLE_USER') %}
+                            <div style="padding-top: 25px; display: none;">
+                                <button type="submit" class="btn btn-primary btn-success btn-xs add-mycontent-js" data-id="{{ content_data.id }}"/>Добавить в мои</button>
+                            </div>
+                            <div style="padding-top: 25px;">
+                                <button type="submit" class="btn btn-primary btn-danger btn-xs del-mycontent-js" data-id="{{ content_data.id }}"/>Удалить из моих</button>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+        {% else %}
+            <div class="not_message"><center>Нет записей</center></div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{#{% block content_main %}    #}
+    {#{% if is_granted('ROLE_ADMIN') %}#}
+        {#<div style="text-align: center;">#}
+            {#<a href="{{ path('sf2films_films_add') }}">#}
+                {#<button id="add_films" type="submit" class="btn btn-primary"/>Добавить фильм</button>#}
+            {#</a>#}
+        {#</div>#}
+    {#{% endif %}#}
+    {#&#123;&#35;Страница с фильмами (старница {{ page }})&#35;&#125;#}
+    {#<div style="font-size: 16px;"><label>Все фильмы</label></div>#}
+    {#<div id="allPost" class="postBox">#}
+        {#{% for content_data in data if content_data.name %}#}
+            {#{% if (is_granted('ROLE_ADMIN') or content_data.isPublish != 0) %}#}
+                {#<div class="panel panel-default post_element" id_content="{{ content_data.id }}">#}
+                    {#<div class="post_poster">#}
+                        {#<a href="{{ path('sf2films_films_element', {'slug': content_data.slug}) }}">#}
+                            {#<img src="{% if content_data.posterImg %} {{ content_data.posterImg }} {% else %} /uploads/poster/not_img.jpg {% endif %}" class="poster_img"/>#}
+                        {#</a>#}
+                    {#</div>#}
+                    {#<div class="panel-body post_body">#}
+                        {#<div style="overflow: hidden">#}
+                            {#<div style="float: left; font-size: 18px;">#}
+                                {#<a href="{{ path('sf2films_films_element', {'slug': content_data.slug}) }}">#}
+                                    {#{{ content_data.name }} {% if content_data.isPublish == 0 %}<span style="color: red;">(неопубликованный)</span>{% endif %}#}
+                                {#</a>#}
+                            {#</div>#}
+                            {#{% if is_granted('ROLE_ADMIN') %}#}
+                                {#<div style="float: right;">#}
+                                    {#<a href="{{ path('sf2films_films_edit', {'id': content_data.id}) }}">#}
+                                        {#<span class="glyphicon glyphicon-edit post_edit" title="Редактировать"></span>#}
+                                    {#</a>#}
+                                    {#<a href="{{ path('sf2films_films_del', {'id': content_data.id}) }}">#}
+                                        {#<span class="glyphicon glyphicon-remove post_delete" title="Удалить"></span>#}
+                                    {#</a>#}
+                                {#</div>#}
+                            {#{% endif %}#}
+                        {#</div>#}
+
+                        {#{% if content_data.genres|length > 0 %}#}
+                            {#<div style="padding: 5px;">#}
+                                {#<span style="font-weight: bold;">Жанр:</span>#}
+                                {#{% for genre in content_data.genres %}#}
+                                    {#<a href="{{ path('sf2films_films_by_genre', {'translit': genre.nameTranslit}) }}">{{ genre.name }}</a>{% if not loop.last %}, {% endif %}#}
+                                {#{% endfor %}#}
+                            {#</div>#}
+                        {#{% endif %}#}
+
+                        {#{% if content_data.persons|length > 0 %}#}
+                            {#<div style="padding: 5px;">#}
+                                {#<span style="font-weight: bold;">Актеры:</span>#}
+                                {#{% for person in content_data.persons %}#}
+                                    {#<a href="{{ path('sf2films_films_by_person', {'translit': person.nameTranslit}) }}">{{ person.name }}</a>{% if not loop.last %}, {% endif %}#}
+                                {#{% endfor %}#}
+                            {#</div>#}
+                        {#{% endif %}#}
+
+                        {#{% if content_data.year !=  0 %}#}
+                            {#<div style="padding: 5px;">#}
+                                {#<span style="font-weight: bold;">Год:</span>#}
+                                {#{{ content_data.year }}#}
+                            {#</div>#}
+                        {#{% endif %}#}
+                        {#{% if content_data.duration !=  0 %}#}
+                            {#<div style="padding: 5px;">#}
+                                {#<span style="font-weight: bold;">Продолжительность:</span>#}
+                                {#{{ content_data.duration }}#}
+                            {#</div>#}
+                        {#{% endif %}#}
+                        {#{% if content_data.budget !=  0 %}#}
+                            {#<div style="padding: 5px;">#}
+                                {#<span style="font-weight: bold;">Бюджет:</span>#}
+                                {#{{ content_data.budget }}#}
+                            {#</div>#}
+                        {#{% endif %}#}
+                        {#<div style="padding: 5px;">#}
+                            {#<span style="font-weight: bold;">Анотация:</span><br/>#}
+                            {#{{ content_data.description }}#}
+                        {#</div>#}
+                    {#</div>#}
+                {#</div>#}
+            {#{% endif %}#}
+        {#{% else %}#}
+            {#<div class="not_message"><center>Нет записей</center></div>#}
+        {#{% endfor %}#}
+        {#<div class="pagerfanta">{{ pagerfanta(pagerfanta, 'default') }}</div>#}
+    {#</div>#}
+{#{% endblock %}#}

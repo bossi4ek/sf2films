@@ -17,7 +17,7 @@ class Sitemap {
     public function onSitemapEvent(SitemapEvent $event) {
 
         // Get all films
-        $films = $this->repo->findAllFilms();
+        $films = $this->repo->findAllFilmsForSitemap();
 
         foreach ($films as $film) {
             $path = sprintf('films/%s', $film->getSlug());

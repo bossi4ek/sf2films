@@ -18,6 +18,11 @@ class Films {
         return $this->repo->findAllFilms();
     }
 
+//Get all films is_publish = 1
+    public function showAllFilmsIsPublish(){
+        return $this->repo->findAllFilmsByIsPublish();
+    }
+
 //Get one Element by slug
     public function findOneBySlug($slug){
         return $this->repo->findOneBySlug($slug);

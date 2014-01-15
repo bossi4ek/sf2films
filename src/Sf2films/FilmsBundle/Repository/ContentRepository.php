@@ -24,6 +24,39 @@ class ContentRepository extends EntityRepository
         }
     }
 
+    public function findAllFilmsByIsPublish()
+    {
+        $query = $this->getEntityManager()
+            ->createQuery('
+                SELECT content
+                FROM Sf2filmsFilmsBundle:Content content
+                WHERE content.is_publish = :is_publish
+                ORDER BY content.created DESC')
+            ->setParameter('is_publish', 1);
+
+        return $query;
+
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
+    public function findAllFilmsForSitemap()
+    {
+        $query = $this->getEntityManager()
+            ->createQuery('
+                SELECT content
+                FROM Sf2filmsFilmsBundle:Content content
+                ORDER BY content.created DESC');
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
     public function findOneBySlug($slug)
     {
         $query = $this->getEntityManager()

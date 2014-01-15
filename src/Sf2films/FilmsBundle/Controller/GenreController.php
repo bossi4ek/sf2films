@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sf2films\FilmsBundle\Entity\Genre;
 use Sf2films\FilmsBundle\Form\GenreType;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class GenreController extends Controller
 {
@@ -22,6 +23,10 @@ class GenreController extends Controller
 
     public function editElementAction(Request $request)
     {
+        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedException();
+        }
+
         $id = $request->attributes->get('id');
         $em = $this->getDoctrine()->getManager();
         $obj = $em->getRepository('Sf2filmsFilmsBundle:Genre')->findOneById($id);
@@ -45,6 +50,10 @@ class GenreController extends Controller
 
     public function addElementAction(Request $request)
     {
+        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedException();
+        }
+
         $obj = new Genre();
         $form = $this->createForm(new GenreType(), $obj);
 
@@ -65,6 +74,10 @@ class GenreController extends Controller
     }
 
     public function delElementAction($id) {
+        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedException();
+        }
+
         $em = $this->getDoctrine()->getManager();
         $genre = $em->getRepository('Sf2filmsFilmsBundle:Genre')->findOneById($id);
         $em->remove($genre);

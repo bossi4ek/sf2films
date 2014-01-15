@@ -1,3 +1,51 @@
+//My content
+
+addMycontent = function(obj) {
+    $.ajax({
+        type: "POST",
+        url: "/mycontent/add",
+        data: {
+            id : $(obj).data('id')
+        },
+        success: function(response){
+            if (response == 1) {
+                alert("Успешно добавлен");
+//                $(obj).removeClass("btn-success").addClass("btn-danger").text("Удалить из моих");
+//                $(obj).click(function(){
+//                   delMycontent(obj);
+//                });
+                $(obj).parent().hide();
+                $(obj).parent().next().show();
+            }
+            else {
+                alert("Ошибка добавления");
+            }
+        }
+    });
+}
+
+delMycontent = function(obj) {
+    $.ajax({
+        type: "POST",
+        url: "/mycontent/del",
+        data: {
+            id : $(obj).data('id')
+        },
+        success: function(response){
+            if (response == 1) {
+                alert("Успешно удален");
+//                $(".post_element[id_content='" + $(obj).data('id') + "']").remove();
+                $(obj).parent().hide();
+                $(obj).parent().prev().show();
+            }
+            else {
+                alert("Ошибка удаления");
+            }
+        }
+    });
+}
+
+
 setRandomMessage = function(obj)
 {
   if ($(obj).is(":checked")) {
@@ -57,5 +105,12 @@ $(document).ready(function() {
 
         // add a new tag form (see next code block)
         addTagForm(collectionHolder, $newLinkLi);
+    });
+
+    $(".add-mycontent-js").click(function(){
+        addMycontent(this);
+    });
+    $(".del-mycontent-js").click(function(){
+        delMycontent(this);
     });
 });

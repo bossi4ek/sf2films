@@ -19,7 +19,9 @@ class AppKernel extends Kernel
             new Sf2films\FilmsBundle\Sf2filmsFilmsBundle(),
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
-            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle()
+            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+            new FOS\UserBundle\FOSUserBundle(),
+            new Sf2films\UserBundle\Sf2filmsUserBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

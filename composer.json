@@ -23,7 +23,8 @@
         "doctrine/data-fixtures": "dev-master",
         "white-october/pagerfanta-bundle": "dev-master",
         "gedmo/doctrine-extensions": "dev-master",
-        "stof/doctrine-extensions-bundle": "dev-master"
+        "stof/doctrine-extensions-bundle": "dev-master",
+        "friendsofsymfony/user-bundle": "~2.0@dev"
     },
     "scripts": {
         "post-install-cmd": [
