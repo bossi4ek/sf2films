@@ -8,6 +8,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
+use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
+use Symfony\Component\Security\Acl\Permission\MaskBuilder;
+
 class CommentController extends Controller
 {
 
@@ -37,6 +42,22 @@ class CommentController extends Controller
         $em->persist($obj);
         $em->flush();
 
+//----------------------------------------------------------------------------------------------------------------------
+// creating the ACL
+        $aclProvider = $this->get('security.acl.provider');
+        $objectIdentity = ObjectIdentity::fromDomainObject($obj);
+        $acl = $aclProvider->createAcl($objectIdentity);
+
+// retrieving the security identity of the currently logged-in user
+        $securityContext = $this->get('security.context');
+        $user = $securityContext->getToken()->getUser();
+        $securityIdentity = UserSecurityIdentity::fromAccount($user);
+
+// grant owner access
+        $acl->insertObjectAce($securityIdentity, MaskBuilder::MASK_OWNER);
+        $aclProvider->updateAcl($acl);
+//----------------------------------------------------------------------------------------------------------------------
+
         return $this->redirect($this->generateUrl('sf2films_films_element', array("slug" => $content->getSlug())));
     }
 
@@ -46,6 +67,15 @@ class CommentController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $obj = $em->getRepository('Sf2filmsCommentBundle:Comment')->findOneById($id);
+
+//----------------------------------------------------------------------------------------------------------------------
+        $securityContext = $this->get('security.context');
+
+// check for edit access
+        if (false === $securityContext->isGranted('EDIT', $obj)) {
+            throw new AccessDeniedException();
+        }
+//----------------------------------------------------------------------------------------------------------------------
 
         //content slug for redirect
         $content_slug = $obj->getContent()->getSlug();
