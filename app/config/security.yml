@@ -26,4 +26,5 @@ security:
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_ADMIN }
-#        - { path: ^/films/add, role: ROLE_ADMIN }
+        - { path: ^/(films|genre|person)/add$, role: ROLE_ADMIN }
+        - { path: ^/(films|genre|person)/(edit|delete)/\d+$, role: ROLE_ADMIN }

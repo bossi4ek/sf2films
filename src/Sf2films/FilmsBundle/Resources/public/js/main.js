@@ -45,7 +45,6 @@ delMycontent = function(obj) {
     });
 }
 
-
 setRandomMessage = function(obj)
 {
   if ($(obj).is(":checked")) {

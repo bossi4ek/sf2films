@@ -26,11 +26,18 @@ class User extends BaseUser
      **/
     private $contents;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Sf2films\CommentBundle\Entity\Comment", mappedBy="content")
+     */
+    protected $comments;
+
     public function __construct()
     {
         parent::__construct();
         // your own logic
         $this->contents = new ArrayCollection();
+
+        $this->comments = new ArrayCollection();
     }
 
 
@@ -75,5 +82,38 @@ class User extends BaseUser
     public function getContents()
     {
         return $this->contents;
+    }
+
+    /**
+     * Add comments
+     *
+     * @param \Sf2films\CommentBundle\Entity\Comment $comments
+     * @return User
+     */
+    public function addComment(\Sf2films\CommentBundle\Entity\Comment $comments)
+    {
+        $this->comments[] = $comments;
+    
+        return $this;
+    }
+
+    /**
+     * Remove comments
+     *
+     * @param \Sf2films\CommentBundle\Entity\Comment $comments
+     */
+    public function removeComment(\Sf2films\CommentBundle\Entity\Comment $comments)
+    {
+        $this->comments->removeElement($comments);
+    }
+
+    /**
+     * Get comments
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getComments()
+    {
+        return $this->comments;
     }
 }

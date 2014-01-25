@@ -23,10 +23,6 @@ class PersonController extends Controller
 
     public function editElementAction(Request $request)
     {
-        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
-            throw new AccessDeniedException();
-        }
-
         $id = $request->attributes->get('id');
         $em = $this->getDoctrine()->getManager();
         $obj = $em->getRepository('Sf2filmsFilmsBundle:Person')->findOneById($id);
@@ -50,10 +46,6 @@ class PersonController extends Controller
 
     public function addElementAction(Request $request)
     {
-        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
-            throw new AccessDeniedException();
-        }
-
         $obj = new Person();
         $form = $this->createForm(new PersonType(), $obj);
 
@@ -74,10 +66,6 @@ class PersonController extends Controller
     }
 
     public function delElementAction($id) {
-        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
-            throw new AccessDeniedException();
-        }
-
         $em = $this->getDoctrine()->getManager();
         $genre = $em->getRepository('Sf2filmsFilmsBundle:Person')->findOneById($id);
         $em->remove($genre);

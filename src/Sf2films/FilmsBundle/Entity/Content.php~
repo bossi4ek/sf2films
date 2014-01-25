@@ -138,6 +138,11 @@ class Content {
      **/
     private $users;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Sf2films\CommentBundle\Entity\Comment", mappedBy="content")
+     */
+    protected $comments;
+
 
     public function __construct() {
         $this->genres = new ArrayCollection();
@@ -145,6 +150,8 @@ class Content {
         $this->tags = new ArrayCollection();
 
         $this->users = new ArrayCollection();
+
+        $this->comments = new ArrayCollection();
     }
 
 
@@ -674,5 +681,38 @@ class Content {
     public function getTags()
     {
         return $this->tags;
+    }
+
+    /**
+     * Add comments
+     *
+     * @param \Sf2films\CommentBundle\Entity\Comment $comments
+     * @return Content
+     */
+    public function addComment(\Sf2films\CommentBundle\Entity\Comment $comments)
+    {
+        $this->comments[] = $comments;
+    
+        return $this;
+    }
+
+    /**
+     * Remove comments
+     *
+     * @param \Sf2films\CommentBundle\Entity\Comment $comments
+     */
+    public function removeComment(\Sf2films\CommentBundle\Entity\Comment $comments)
+    {
+        $this->comments->removeElement($comments);
+    }
+
+    /**
+     * Get comments
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getComments()
+    {
+        return $this->comments;
     }
 }
