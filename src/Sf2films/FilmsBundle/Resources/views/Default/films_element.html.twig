@@ -119,13 +119,14 @@
                             <span style="font-size: 11px;">({{ comment.created|date('Y-m-d H:i:s') }})</span>
                         </div>
                         <div style="font-weight: bold; float: right">
-                            {% if is_granted('EDIT', comment) %}
+                            {% if is_granted('EDIT', comment) or is_granted('ROLE_ADMIN') %}
                                 <a href="{{ path('sf2films_comment_edit', {'id': comment.id}) }}">
                                     <span class="glyphicon glyphicon-edit edit-comment-js" title="Редактировать"></span>
                                 </a>
                             {% endif %}
-                            {% if is_granted('EDIT', comment) %}
-                            <span style="cursor: pointer;" class="glyphicon glyphicon-remove del-comment-js" data-id="{{ comment.id }}" title="Удалить"></span>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <span style="cursor: pointer;" class="glyphicon glyphicon-remove del-comment-js" data-id="{{ comment.id }}" title="Удалить"></span>
+                            {% endif %}
                         </div>
                     </div>
                     <div>{{ comment.txt }}</div>
