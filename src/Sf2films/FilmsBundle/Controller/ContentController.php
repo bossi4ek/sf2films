@@ -13,6 +13,8 @@ use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
+use Sf2films\CommentBundle\Form\CommentType;
+
 class ContentController extends Controller
 {
 
@@ -73,12 +75,16 @@ class ContentController extends Controller
 
     public function showElementAction($slug)
     {
-
         $data = $this->getFilmsService()->findOneBySlug($slug);
 //        var_dump($data);
 
+        $comment_form = $this->createForm(new CommentType());
+
         return $this->render('Sf2filmsFilmsBundle:Default:films_element.html.twig',
-                              array('data' => $data));
+                              array(
+                                  'data' => $data,
+                                  'comment_form' => $comment_form->createView()
+                              ));
     }
 
     public function showAllByGenreAction($translit)
@@ -141,10 +147,6 @@ class ContentController extends Controller
 
     public function addElementAction(Request $request)
     {
-        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
-            throw new AccessDeniedException();
-        }
-
         $content_obj = new Content();
         $form = $this->createForm(new FilmsType(), $content_obj, array("validation_groups" => array("AddContent")));
 
@@ -172,10 +174,6 @@ class ContentController extends Controller
 
     public function editElementAction(Request $request)
     {
-        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
-            throw new AccessDeniedException();
-        }
-
         $id = $request->attributes->get('id');
         $em = $this->getDoctrine()->getManager();
         $content_obj = $em->getRepository('Sf2filmsFilmsBundle:Content')->findOneById($id);
@@ -215,10 +213,6 @@ class ContentController extends Controller
 
     public function delElementAction($id)
     {
-        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
-            throw new AccessDeniedException();
-        }
-
         $em = $this->getDoctrine()->getManager();
         $content = $em->getRepository('Sf2filmsFilmsBundle:Content')->findOneById($id);
         $em->remove($content);
