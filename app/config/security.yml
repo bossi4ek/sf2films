@@ -21,6 +21,10 @@ security:
             logout:
                 invalidate_session: false
 
+#TODO finish this code
+    acl:
+        connection: default
+
     access_control:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
