@@ -9,7 +9,6 @@ addMycontent = function(obj) {
         },
         success: function(response){
             if (response == 1) {
-                alert("Успешно добавлен");
 //                $(obj).removeClass("btn-success").addClass("btn-danger").text("Удалить из моих");
 //                $(obj).click(function(){
 //                   delMycontent(obj);
@@ -33,7 +32,6 @@ delMycontent = function(obj) {
         },
         success: function(response){
             if (response == 1) {
-                alert("Успешно удален");
 //                $(".post_element[id_content='" + $(obj).data('id') + "']").remove();
                 $(obj).parent().hide();
                 $(obj).parent().prev().show();

@@ -10,6 +10,7 @@ use Sf2films\FilmsBundle\Entity\Content;
 use Sf2films\FilmsBundle\Entity\Genre;
 use Sf2films\FilmsBundle\Entity\Person;
 use Sf2films\FilmsBundle\Transliter;
+use Sf2films\UserBundle\Entity\User;
 
 class LoadFilmsData implements FixtureInterface, OrderedFixtureInterface
 {
@@ -170,6 +171,25 @@ class LoadFilmsData implements FixtureInterface, OrderedFixtureInterface
         $films4->setBudget(20000000);
         $films4->setIsPublish(0);
         $manager->persist($films4);
+
+        $manager->flush();
+
+//====================================================================
+        $user_admin = new User();
+        $user_admin->setUsername('admin')
+                   ->setPlainPassword('admin')
+                   ->setEmail('admin@gmail.com')
+                   ->setRoles(array('ROLE_SUPER_ADMIN'))
+                   ->setEnabled(true);
+        $manager->persist($user_admin);
+
+        $user = new User();
+        $user->setUsername('user')
+             ->setPlainPassword('user')
+             ->setEmail('user@gmail.com')
+             ->setRoles(array('ROLE_USER'))
+             ->setEnabled(true);
+        $manager->persist($user);
 
         $manager->flush();
     }

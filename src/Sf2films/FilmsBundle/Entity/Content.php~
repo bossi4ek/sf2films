@@ -136,7 +136,7 @@ class Content {
     /**
      * ORM\@ManyToMany(targetEntity="Sf2films\UserBundle\Entity\User", mappedBy="contents")
      **/
-    private $users;
+    protected $users;
 
     /**
      * @ORM\OneToMany(targetEntity="Sf2films\CommentBundle\Entity\Comment", mappedBy="content")
