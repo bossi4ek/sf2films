@@ -80,6 +80,13 @@
                         </div>
                     </div>
                     {% if is_granted('ROLE_USER') %}
+
+                    {#{% if data.users|length > 0 %}#}
+                        {#{% for user in data.users %}#}
+                            {#{{ user.name }}#}
+                        {#{% endfor %}#}
+                    {#{% endif %}#}
+
                         <div style="text-align: right; padding: 5px;">
                             <button type="submit" class="btn btn-primary btn-success btn-xs add-mycontent-js" data-id="{{ content_data.id }}"/>Добавить в мои</button>
                         </div>
