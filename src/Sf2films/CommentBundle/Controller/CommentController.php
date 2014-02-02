@@ -32,31 +32,34 @@ class CommentController extends Controller
             ->getRepository('Sf2filmsUserBundle:User')
             ->findOneById($id_user);
 
-        //add new comment        
-        $obj = new Comment();
-        $obj->setContent($content);
-        $obj->setUser($user_data);
-        $obj->setTxt($comment['txt']);
+        //FIXME added validation commentForm
+        if ($comment['txt'] != "") {
+            //add new comment
+            $obj = new Comment();
+            $obj->setContent($content);
+            $obj->setUser($user_data);
+            $obj->setTxt($comment['txt']);
 
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($obj);
-        $em->flush();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($obj);
+            $em->flush();
 
 //----------------------------------------------------------------------------------------------------------------------
 // creating the ACL
-        $aclProvider = $this->get('security.acl.provider');
-        $objectIdentity = ObjectIdentity::fromDomainObject($obj);
-        $acl = $aclProvider->createAcl($objectIdentity);
+            $aclProvider = $this->get('security.acl.provider');
+            $objectIdentity = ObjectIdentity::fromDomainObject($obj);
+            $acl = $aclProvider->createAcl($objectIdentity);
 
 // retrieving the security identity of the currently logged-in user
-        $securityContext = $this->get('security.context');
-        $user = $securityContext->getToken()->getUser();
-        $securityIdentity = UserSecurityIdentity::fromAccount($user);
+            $securityContext = $this->get('security.context');
+            $user = $securityContext->getToken()->getUser();
+            $securityIdentity = UserSecurityIdentity::fromAccount($user);
 
 // grant owner access
-        $acl->insertObjectAce($securityIdentity, MaskBuilder::MASK_OWNER);
-        $aclProvider->updateAcl($acl);
+            $acl->insertObjectAce($securityIdentity, MaskBuilder::MASK_OWNER);
+            $aclProvider->updateAcl($acl);
 //----------------------------------------------------------------------------------------------------------------------
+        }
 
         return $this->redirect($this->generateUrl('sf2films_films_element', array("slug" => $content->getSlug())));
     }
@@ -72,7 +75,7 @@ class CommentController extends Controller
         $securityContext = $this->get('security.context');
 
 // check for edit access
-        if (false === $securityContext->isGranted('EDIT', $obj)) {
+        if (false === $securityContext->isGranted('EDIT', $obj) && !$securityContext->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException();
         }
 //----------------------------------------------------------------------------------------------------------------------
@@ -102,8 +105,22 @@ class CommentController extends Controller
         $id_comment = $request->request->get('id');
         $em = $this->getDoctrine()->getManager();
         $comment = $em->getRepository('Sf2filmsCommentBundle:Comment')->findOneById($id_comment);
+
+//----------------------------------------------------------------------------------------------------------------------
+        $securityContext = $this->get('security.context');
+
+// check for edit access
+        if (false === $securityContext->isGranted('DELETE', $comment) && !$securityContext->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedException();
+        }
+//----------------------------------------------------------------------------------------------------------------------
+
         $em->remove($comment);
         $em->flush();
+
+        //FIXME added delete ace
+//        $aclProvider = $this->get('security.acl.provider');
+//        $objectIdentity = ObjectIdentity::fromDomainObject($comment);
 
         return new Response(1);
     }

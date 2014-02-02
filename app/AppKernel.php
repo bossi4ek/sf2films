@@ -21,6 +21,7 @@ class AppKernel extends Kernel
             new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new FOS\UserBundle\FOSUserBundle(),
+            new FOS\FacebookBundle\FOSFacebookBundle(),
             new Sf2films\UserBundle\Sf2filmsUserBundle(),
             new Sf2films\CommentBundle\Sf2filmsCommentBundle(),
         );
