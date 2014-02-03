@@ -223,6 +223,8 @@ class ContentController extends Controller
         }
         $em->flush();
 
+        //FIXME added delete comment ace
+
         return $this->redirect($this->generateUrl('sf2films_films_all'));
     }
 

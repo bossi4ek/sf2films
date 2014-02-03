@@ -7,8 +7,14 @@ security:
         ROLE_SUPER_ADMIN: ROLE_ADMIN
 
     providers:
+        chain_provider:
+            chain:
+                providers: [fos_userbundle, my_fos_facebook_provider]
         fos_userbundle:
             id: fos_user.user_provider.username
+        my_fos_facebook_provider:
+#            id: my.facebook.user   # see "Example Custom User Provider using the FOS\UserBundle" chapter further down
+            id: my_user.facebook_provider   # see "Example Custom User Provider using the FOS\UserBundle" chapter further down
 
     firewalls:
         main:
@@ -16,6 +22,13 @@ security:
             form_login:
                 provider: fos_userbundle
                 csrf_provider: form.csrf_provider
+            fos_facebook:
+                app_url: "http://apps.facebook.com/557817287647441/"
+                server_url: "http://sf2films/facebookApp/"
+                login_path: /login
+                check_path: /login_fb_check
+                default_target_path: /
+                provider: my_fos_facebook_provider
             logout:       true
             anonymous:    true
             logout:
@@ -32,3 +45,6 @@ security:
         - { path: ^/admin/, role: ROLE_ADMIN }
         - { path: ^/(films|genre|person)/add$, role: ROLE_ADMIN }
         - { path: ^/(films|genre|person)/(edit|delete)/\d+$, role: ROLE_ADMIN }
+
+        - { path: ^/facebook/, role: [ROLE_FACEBOOK] }
+        - { path: ^/secured/.*, role: [IS_AUTHENTICATED_FULLY] } # This is the route secured with fos_facebook

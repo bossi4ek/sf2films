@@ -20,6 +20,7 @@ class Comment {
 
     /**
      * @ORM\Column()
+     * @Assert\NotBlank()
      * @Assert\Length(min = "2")
      */
     protected $txt;

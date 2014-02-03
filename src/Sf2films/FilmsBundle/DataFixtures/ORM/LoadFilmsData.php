@@ -181,6 +181,9 @@ class LoadFilmsData implements FixtureInterface, OrderedFixtureInterface
                    ->setEmail('admin@gmail.com')
                    ->setRoles(array('ROLE_SUPER_ADMIN'))
                    ->setEnabled(true);
+        $user_admin->setFirstname('admin');
+        $user_admin->setLastname('admin');
+        $user_admin->setFacebookId('1');
         $manager->persist($user_admin);
 
         $user = new User();
@@ -189,6 +192,9 @@ class LoadFilmsData implements FixtureInterface, OrderedFixtureInterface
              ->setEmail('user@gmail.com')
              ->setRoles(array('ROLE_USER'))
              ->setEnabled(true);
+        $user->setFirstname('user');
+        $user->setLastname('user');
+        $user->setFacebookId('2');
         $manager->persist($user);
 
         $manager->flush();

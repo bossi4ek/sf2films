@@ -2,6 +2,14 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
 
+#services:
+#    my.facebook.user:
+#        class: Sf2films\UserBundle\Security\User\Provider\FacebookProvider
+#        arguments:
+#            facebook: "@fos_facebook.api"
+#            userManager: "@fos_user.user_manager"
+#            validator: "@validator"
+
 framework:
     #esi:             ~
     #translator:      { fallback: %locale% }
@@ -77,3 +85,10 @@ fos_user:
     db_driver: orm
     firewall_name: main
     user_class: Sf2films\UserBundle\Entity\User
+
+fos_facebook:
+    alias:  facebook
+    app_id: 557817287647441
+    secret: 09719b49eff6f87a2321e6f1cc3129ee
+    cookie: true
+    permissions: [email, user_birthday, user_location]
