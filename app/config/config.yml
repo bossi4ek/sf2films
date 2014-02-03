@@ -2,13 +2,13 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
 
-services:
-    my.facebook.user:
-        class: Sf2films\UserBundle\Security\User\Provider\FacebookProvider
-        arguments:
-            facebook: "@fos_facebook.api"
-            userManager: "@fos_user.user_manager"
-            validator: "@validator"
+#services:
+#    my.facebook.user:
+#        class: Sf2films\UserBundle\Security\User\Provider\FacebookProvider
+#        arguments:
+#            facebook: "@fos_facebook.api"
+#            userManager: "@fos_user.user_manager"
+#            validator: "@validator"
 
 framework:
     #esi:             ~

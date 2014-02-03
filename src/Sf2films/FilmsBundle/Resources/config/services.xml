@@ -9,6 +9,8 @@
             <parameter key="f">Женский</parameter>
         </parameter>
         <parameter key="element_per_page">3</parameter>
+
+        <parameter key="my_user.facebook_provider.class">Sf2films\UserBundle\Security\User\Provider\FacebookProvider</parameter>
     </parameters>
 
     <services>
@@ -25,6 +27,15 @@
         <service id="sf2films_films.sitemap" class="Sf2films\FilmsBundle\Sitemap">
             <argument type="service" id="content.repository"/>
             <tag name="kernel.event_listener" event="sf2films_films.events.sitemap" method="onSitemapEvent" />
+        </service>
+
+        <!-- Facebook provider -->
+        <service id="my_user.facebook_provider" class="%my_user.facebook_provider.class%">
+            <argument type="service" id="fos_facebook.api" />
+            <argument type="service" id="fos_user.user_manager" />
+            <argument type="service" id="validator" />
+            <argument type="service" id="service_container" />
+            <argument>%fos_user.model.user.class%</argument>
         </service>
     </services>
 </container>
