@@ -29,7 +29,7 @@
             <tag name="kernel.event_listener" event="sf2films_films.events.sitemap" method="onSitemapEvent" />
         </service>
 
-        <!-- Facebook provider -->
+         <!--Facebook provider-->
         <service id="my_user.facebook_provider" class="%my_user.facebook_provider.class%">
             <argument type="service" id="fos_facebook.api" />
             <argument type="service" id="fos_user.user_manager" />
