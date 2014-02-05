@@ -87,7 +87,10 @@ class CommentController extends Controller
 
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        $comment_new = $request->request->get('comment');
+
+//        if ($form->isValid()) {
+        if ($comment_new['txt'] != "") {
             $em = $this->getDoctrine()->getManager();
             $em->flush();
 
