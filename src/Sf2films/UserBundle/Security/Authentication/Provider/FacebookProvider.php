@@ -1,6 +1,6 @@
 <?php
 
-namespace Sf2films\UserBundle\Security\User\Provider;
+namespace Sf2films\UserBundle\Security\Authentication\Provider;
 
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
