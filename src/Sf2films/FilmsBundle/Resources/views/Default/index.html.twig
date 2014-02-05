@@ -32,9 +32,9 @@
                 </ul>
 
                 <ul class="nav navbar-nav" style="float: right;">
-                    {#{% if is_granted('ROLE_ADMIN') %}#}
-                        {##}
-                    {#{% endif %}#}
+                    {% if is_granted('ROLE_FACEBOOK') %}
+                        facebook
+                    {% endif %}
 
                     {% if app.user.username is defined %}
                         <li><a href="{{ path('fos_user_profile_show')}}">{{ app.user.username }}</a></li>
