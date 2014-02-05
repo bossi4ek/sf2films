@@ -178,11 +178,11 @@ class LoadFilmsData implements FixtureInterface, OrderedFixtureInterface
         $user_admin = new User();
         $user_admin->setUsername('admin')
                    ->setPlainPassword('admin')
-                   ->setEmail('admin@gmail.com')
+                   ->setEmail('lsp_ua@ukr.net')
                    ->setRoles(array('ROLE_SUPER_ADMIN'))
                    ->setEnabled(true);
-        $user_admin->setFirstname('admin');
-        $user_admin->setLastname('admin');
+        $user_admin->setFirstname('admin1');
+        $user_admin->setLastname('admin1');
         $user_admin->setFacebookId('1');
         $manager->persist($user_admin);
 
