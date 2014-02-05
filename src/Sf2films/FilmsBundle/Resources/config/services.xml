@@ -10,7 +10,7 @@
         </parameter>
         <parameter key="element_per_page">3</parameter>
 
-        <parameter key="my_user.facebook_provider.class">Sf2films\UserBundle\Security\User\Provider\FacebookProvider</parameter>
+        <parameter key="my_user.facebook_provider.class">Sf2films\UserBundle\Security\Authentication\Provider\FacebookProvider</parameter>
     </parameters>
 
     <services>
