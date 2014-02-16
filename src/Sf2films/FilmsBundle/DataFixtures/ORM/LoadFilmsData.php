@@ -4,16 +4,25 @@ namespace Sf2films\FilmsBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
 use Sf2films\FilmsBundle\Entity\Content;
 use Sf2films\FilmsBundle\Entity\Genre;
 use Sf2films\FilmsBundle\Entity\Person;
 use Sf2films\FilmsBundle\Transliter;
-use Sf2films\UserBundle\Entity\User;
 
-class LoadFilmsData implements FixtureInterface, OrderedFixtureInterface
+class LoadFilmsData implements FixtureInterface, OrderedFixtureInterface, ContainerAwareInterface
 {
+
+    private $container;
+
+    public function setContainer(ContainerInterface $container = null)
+    {
+        $this->container = $container;
+    }
+
     public function getOrder()
     {
         return 10;
@@ -34,6 +43,8 @@ class LoadFilmsData implements FixtureInterface, OrderedFixtureInterface
     {
         $this->copyImg();
 
+        $repository = $manager->getRepository('Gedmo\\Translatable\\Entity\\Translation');
+
         $translit = new Transliter();
 
         $genre_name = 'Боевик';
@@ -41,6 +52,9 @@ class LoadFilmsData implements FixtureInterface, OrderedFixtureInterface
         $genre1->setName($genre_name);
         $genre1->setNameTranslit($translit->getTranslit($genre_name));
         $genre1->setIsPublish(1);
+
+        $repository->translate($genre1, 'name', 'en', 'Thriller')
+                   ->translate($genre1, 'name', 'ru', 'Боевик');
         $manager->persist($genre1);
 
         $genre_name = 'Комедия';
@@ -48,6 +62,9 @@ class LoadFilmsData implements FixtureInterface, OrderedFixtureInterface
         $genre2->setName($genre_name);
         $genre2->setNameTranslit($translit->getTranslit($genre_name));
         $genre2->setIsPublish(1);
+
+        $repository->translate($genre2, 'name', 'en', 'Comedy')
+                   ->translate($genre2, 'name', 'ru', 'Комедия');
         $manager->persist($genre2);
 
         $genre_name = 'Ужасы';
@@ -55,6 +72,9 @@ class LoadFilmsData implements FixtureInterface, OrderedFixtureInterface
         $genre3->setName($genre_name);
         $genre3->setNameTranslit($translit->getTranslit($genre_name));
         $genre3->setIsPublish(1);
+
+        $repository->translate($genre3, 'name', 'en', 'Horror')
+                   ->translate($genre3, 'name', 'ru', 'Ужасы');
         $manager->persist($genre3);
 
         $genre_name = 'Спорт';
@@ -62,6 +82,9 @@ class LoadFilmsData implements FixtureInterface, OrderedFixtureInterface
         $genre4->setName($genre_name);
         $genre4->setNameTranslit($translit->getTranslit($genre_name));
         $genre4->setIsPublish(0);
+
+        $repository->translate($genre4, 'name', 'en', 'Sport')
+                   ->translate($genre4, 'name', 'ru', 'Спорт');
         $manager->persist($genre4);
 
         $manager->flush();
@@ -118,6 +141,9 @@ class LoadFilmsData implements FixtureInterface, OrderedFixtureInterface
         $films1->setDuration(134);
         $films1->setBudget(55000000);
         $films1->setIsPublish(1);
+
+        $repository->translate($films1, 'name', 'en', 'Captain Phillips')
+                   ->translate($films1, 'name', 'ru', 'Капитан Филлипс');
         $manager->persist($films1);
 //====================================================================
 
@@ -136,6 +162,9 @@ class LoadFilmsData implements FixtureInterface, OrderedFixtureInterface
         $films2->setDuration(109);
         $films2->setBudget(61000000);
         $films2->setIsPublish(1);
+
+        $repository->translate($films2, 'name', 'en', 'Two Smoking Barrels')
+                   ->translate($films2, 'name', 'ru', 'Два ствола');
         $manager->persist($films2);
 
 //====================================================================
@@ -151,6 +180,9 @@ class LoadFilmsData implements FixtureInterface, OrderedFixtureInterface
         $films3->setDuration(126);
         $films3->setBudget(120000000);
         $films3->setIsPublish(1);
+
+        $repository->translate($films3, 'name', 'en', 'Wolverine Immortal')
+                   ->translate($films3, 'name', 'ru', 'Росомаха Бессмертный');
         $manager->persist($films3);
 
 //====================================================================
@@ -170,33 +202,33 @@ class LoadFilmsData implements FixtureInterface, OrderedFixtureInterface
         $films4->setDuration(109);
         $films4->setBudget(20000000);
         $films4->setIsPublish(0);
+
+        $repository->translate($films4, 'name', 'en', 'Armageddets')
+                   ->translate($films4, 'name', 'ru', 'Армагеддец');
         $manager->persist($films4);
 
         $manager->flush();
 
 //====================================================================
-        $user_admin = new User();
-        $user_admin->setUsername('admin')
-                   ->setPlainPassword('admin')
-                   ->setEmail('lsp_ua@ukr.net')
-                   ->setRoles(array('ROLE_SUPER_ADMIN'))
-                   ->setEnabled(true);
-        $user_admin->setFirstname('admin1');
-        $user_admin->setLastname('admin1');
-        $user_admin->setFacebookId('1');
-        $manager->persist($user_admin);
 
-        $user = new User();
-        $user->setUsername('user')
-             ->setPlainPassword('user')
-             ->setEmail('user@gmail.com')
-             ->setRoles(array('ROLE_USER'))
-             ->setEnabled(true);
-        $user->setFirstname('user');
-        $user->setLastname('user');
-        $user->setFacebookId('2');
-        $manager->persist($user);
+        $userManager = $this->container->get('fos_user.user_manager');
 
-        $manager->flush();
+        // Create Admin
+        $user = $userManager->createUser();
+        $user->setUsername('admin');
+        $user->setEmail('admin@gmail.com');
+        $user->setPlainPassword('admin');
+        $user->setEnabled(true);
+        $user->setRoles(array('ROLE_ADMIN'));
+        $userManager->updateUser($user, true);
+
+        // Create user
+        $user = $userManager->createUser();
+        $user->setUsername('user');
+        $user->setEmail('user@gmail.com');
+        $user->setPlainPassword('user');
+        $user->setEnabled(true);
+        $user->setRoles(array('ROLE_USER'));
+        $userManager->updateUser($user, true);
     }
 }

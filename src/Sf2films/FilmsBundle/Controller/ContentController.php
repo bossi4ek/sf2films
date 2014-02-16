@@ -26,8 +26,10 @@ class ContentController extends Controller
     public function showAllAction(Request $request)
     {
 
-//        $user = $this->getUser();
-//        echo $user;
+        $user = $this->getUser();
+        echo $user;
+
+//        print_r($this->get('security.context'));
 
 //Use Service
 

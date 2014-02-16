@@ -23,23 +23,23 @@ class User extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(name="firstname", type="string", length=255)
+     * @ORM\Column(name="firstname", type="string", length=100)
      */
-    protected $firstname;
+    protected $firstname = '';
 
     /**
      * @var string
      *
-     * @ORM\Column(name="lastname", type="string", length=255)
+     * @ORM\Column(name="lastname", type="string", length=100)
      */
-    protected $lastname;
+    protected $lastname = '';
 
     /**
      * @var string
      *
-     * @ORM\Column(name="facebookId", type="string", length=255)
+     * @ORM\Column(name="facebookId", type="string", length=50)
      */
-    protected $facebookId;
+    protected $facebookId = '';
 
     /**
      * @ORM\ManyToMany(targetEntity="Sf2films\FilmsBundle\Entity\Content", inversedBy="users")
@@ -161,8 +161,6 @@ class User extends BaseUser
             $this->setEmail($fbdata['email']);
         }
     }
-
-
 
     /**
      * Add contents

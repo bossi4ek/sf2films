@@ -13,35 +13,46 @@
     <script src="{{ asset('bundles/sf2filmscomment/js/comment.js') }}"></script>
 {% endblock %}
 
-{% block title %}Каталог фильмов{% endblock %}
+{% block title %}{{ 'menu.site_name'|trans }}{% endblock %}
 
 {% block body %}
 
     <div id="content_header" class="content_header">
         <nav class="navbar navbar-default" role="navigation">
             <div class="navbar-header">
-                <a class="navbar-brand" href="{{ path('sf2films_homepage')}}">Каталог фильмов</a>
+                <a class="navbar-brand" href="{{ path('sf2films_homepage')}}">{{ 'menu.site_name'|trans }}</a>
             </div>
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav">
-                    <li {% if app.request.attributes.get('_route') == "sf2films_homepage" %}class="active"{% endif %}><a href="{{ path('sf2films_homepage')}}">Главня</a></li>
-                    <li {% if app.request.attributes.get('_route') == "sf2films_films_all" %}class="active"{% endif %}><a href="{{ path('sf2films_films_all')}}">Фильмы</a></li>
-                    <li {% if app.request.attributes.get('_route') == "sf2films_films_genre" %}class="active"{% endif %}><a href="{{ path('sf2films_films_genre')}}">Жанры</a></li>
-                    <li {% if app.request.attributes.get('_route') == "sf2films_films_person" %}class="active"{% endif %}><a href="{{ path('sf2films_films_person')}}">Актеры</a></li>
-                    <li {% if app.request.attributes.get('_route') == "sf2films_sitemap" %}class="active"{% endif %}><a href="{{ path('sf2films_sitemap')}}">Карта сайта</a></li>
+                    <li {% if app.request.attributes.get('_route') == "sf2films_homepage" %}class="active"{% endif %}><a href="{{ path('sf2films_homepage')}}">{{ 'menu.main'|trans }}</a></li>
+                    <li {% if app.request.attributes.get('_route') == "sf2films_films_all" %}class="active"{% endif %}><a href="{{ path('sf2films_films_all')}}">{{ 'menu.films'|trans }}</a></li>
+                    <li {% if app.request.attributes.get('_route') == "sf2films_films_genre" %}class="active"{% endif %}><a href="{{ path('sf2films_films_genre')}}">{{ 'menu.genre'|trans }}</a></li>
+                    <li {% if app.request.attributes.get('_route') == "sf2films_films_person" %}class="active"{% endif %}><a href="{{ path('sf2films_films_person')}}">{{ 'menu.person'|trans }}</a></li>
+                    <li {% if app.request.attributes.get('_route') == "sf2films_sitemap" %}class="active"{% endif %}><a href="{{ path('sf2films_sitemap')}}">{{ 'menu.sitemap'|trans }}</a></li>
                 </ul>
 
                 <ul class="nav navbar-nav" style="float: right;">
                     {% if is_granted('ROLE_FACEBOOK') %}
                         facebook
                     {% endif %}
-
+                    
                     {% if app.user.username is defined %}
                         <li><a href="{{ path('fos_user_profile_show')}}">{{ app.user.username }}</a></li>
-                        <li {% if app.request.attributes.get('_route') == "fos_user_security_logout" %}class="active"{% endif %}><a href="{{ path('fos_user_security_logout')}}">Выйти</a></li>
+                        <li {% if app.request.attributes.get('_route') == "fos_user_security_logout" %}class="active"{% endif %}><a href="{{ path('fos_user_security_logout')}}">{{ 'menu.logout'|trans }}</a></li>
                     {% else %}
-                        <li {% if app.request.attributes.get('_route') == "fos_user_security_login" %}class="active"{% endif %}><a href="{{ path('fos_user_security_login')}}">Войти</a></li>
+                        <li {% if app.request.attributes.get('_route') == "fos_user_security_login" %}class="active"{% endif %}><a href="{{ path('fos_user_security_login')}}">{{ 'menu.login'|trans }}</a></li>
                     {% endif %}
+                </ul>
+                <ul class="nav navbar-nav" style="float: right;">
+                    {# to change locale of current page only#}
+                    {% set params = app.request.attributes.get('_route_params')|merge(app.request.query.all()) %}
+                    {% set ruParams = params|merge({'_locale': 'ru'}) %}
+                    {% set enParams = params|merge({'_locale': 'en'}) %}
+                    {%if app.request.locale == "en"%}
+                        <li><a href="{{ path(app.request.attributes.get('_route'), ruParams) }}">RU</a></li>
+                    {%else%}
+                        <li><a href="{{ path(app.request.attributes.get('_route'), enParams) }}">EN</a></li>
+                    {%endif%}
                 </ul>
             </div>
         </nav>
@@ -50,7 +61,7 @@
     <div id="content_main">
         <div>
             {% block content_main %}
-                Главная страница
+                {{ 'main.main_page'|trans }}
             {% endblock %}
         </div>
     </div>

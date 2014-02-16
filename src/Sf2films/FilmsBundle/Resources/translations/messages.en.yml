@@ -1,0 +1,33 @@
+menu:
+  site_name:      Movies catalog
+  main:           Main
+  films:          Films
+  genre:          Genre
+  person:         Actor
+  sitemap:        Sitemap
+  login:          Login
+  logout:         Logout
+main:
+  main_page:      Main page
+films:
+  all_films:      All films
+  add_film:       Add film
+  no_publish:     (no publish)
+  not_message:    No data
+
+  edit:           Edit
+  delete:         Delete
+
+  tag:            Tags:
+  genre:          Genres:
+  person:         Actors:
+  year:           Year:
+  duration:       Duration:
+  budget:         Budget:
+  description:    Description:
+  comments:       Comments:
+  comments_add:   Add
+  back_to_films:  Back to films
+
+  add_my:         Add to my
+  del_my:         Del my

@@ -34,7 +34,7 @@
             <argument type="service" id="fos_facebook.api" />
             <argument type="service" id="fos_user.user_manager" />
             <argument type="service" id="validator" />
-            <argument type="service" id="service_container" />
+            <!--<argument type="service" id="service_container" />-->
         </service>
     </services>
 </container>

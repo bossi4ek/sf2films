@@ -13,3 +13,12 @@ sf2films_user_mycontent_del:
     pattern:  /mycontent/del
     defaults: { _controller: Sf2filmsUserBundle:Default:delMyContent }
     methods:  [POST]
+
+facebook_security_check:
+    pattern: /facebook/check
+
+facebook_security_logout:
+    pattern: /facebook/logout
+
+fos_facebook_channel:
+    resource: "@FOSFacebookBundle/Resources/config/routing.xml"
