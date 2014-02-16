@@ -12,6 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Gedmo\Mapping\Annotation as Gedmo; // Подключение Gedmo
+use Gedmo\Translatable\Translatable;
 
 /**
  * @ORM\Entity(repositoryClass="Sf2films\FilmsBundle\Repository\ContentRepository")
@@ -27,6 +28,7 @@ class Content {
     protected $id;
 
     /**
+     * @Gedmo\Translatable
      * @ORM\Column()
      * @Assert\Length(min = "5", groups={"AddContent"})
      * @Assert\Length(min = "2", groups={"EditContent"})
@@ -142,6 +144,13 @@ class Content {
      * @ORM\OneToMany(targetEntity="Sf2films\CommentBundle\Entity\Comment", mappedBy="content")
      */
     protected $comments;
+
+    /**
+     * @Gedmo\Locale
+     * Used locale to override Translation listener`s locale
+     * this is not a mapped field of entity metadata, just a simple property
+     */
+    private $locale;
 
 
     public function __construct() {
@@ -714,5 +723,10 @@ class Content {
     public function getComments()
     {
         return $this->comments;
+    }
+
+    public function setTranslatableLocale($locale)
+    {
+        $this->locale = $locale;
     }
 }

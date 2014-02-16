@@ -4,12 +4,12 @@
     {% if is_granted('ROLE_ADMIN') %}
         <div style="text-align: center;">
             <a href="{{ path('sf2films_films_add') }}">
-                <button id="add_films" type="submit" class="btn btn-primary"/>Добавить фильм</button>
+                <button id="add_films" type="submit" class="btn btn-primary"/>{{ 'films.add_film'|trans }}</button>
             </a>
         </div>
     {% endif %}
     {#Страница с фильмами (старница {{ page }})#}
-    <div style="font-size: 16px;"><label>Все фильмы</label></div>
+    <div style="font-size: 16px;"><label>{{ 'films.all_films'|trans }}</label></div>
     <div id="allPost" class="postBox">
         {% for content_data in data if content_data.name %}
             {% if (is_granted('ROLE_ADMIN') or content_data.isPublish != 0) %}
@@ -23,16 +23,16 @@
                         <div style="overflow: hidden">
                             <div style="float: left; font-size: 18px;">
                                 <a href="{{ path('sf2films_films_element', {'slug': content_data.slug}) }}">
-                                    {{ content_data.name }} {% if content_data.isPublish == 0 %}<span style="color: red;">(неопубликованный)</span>{% endif %}
+                                    {{ content_data.name }} {% if content_data.isPublish == 0 %}<span style="color: red;">{{ 'films.no_publish'|trans }}</span>{% endif %}
                                 </a>
                             </div>
                             {% if is_granted('ROLE_ADMIN') %}
                                 <div style="float: right;">
                                     <a href="{{ path('sf2films_films_edit', {'id': content_data.id}) }}">
-                                        <span class="glyphicon glyphicon-edit post_edit" title="Редактировать"></span>
+                                        <span class="glyphicon glyphicon-edit post_edit" title="{{ 'films.edit'|trans }}"></span>
                                     </a>
                                     <a href="{{ path('sf2films_films_del', {'id': content_data.id}) }}">
-                                        <span class="glyphicon glyphicon-remove post_delete" title="Удалить"></span>
+                                        <span class="glyphicon glyphicon-remove post_delete" title="{{ 'films.delete'|trans }}"></span>
                                     </a>
                                 </div>
                             {% endif %}
@@ -40,7 +40,7 @@
 
                         {% if content_data.genres|length > 0 %}
                             <div style="padding: 5px;">
-                                <span style="font-weight: bold;">Жанр:</span>
+                                <span style="font-weight: bold;">{{ 'films.genre'|trans }}</span>
                                 {% for genre in content_data.genres %}
                                     <a href="{{ path('sf2films_films_by_genre', {'translit': genre.nameTranslit}) }}">{{ genre.name }}</a>{% if not loop.last %}, {% endif %}
                                 {% endfor %}
@@ -49,7 +49,7 @@
 
                         {% if content_data.persons|length > 0 %}
                             <div style="padding: 5px;">
-                                <span style="font-weight: bold;">Актеры:</span>
+                                <span style="font-weight: bold;">{{ 'films.person'|trans }}</span>
                                 {% for person in content_data.persons %}
                                     <a href="{{ path('sf2films_films_by_person', {'translit': person.nameTranslit}) }}">{{ person.name }}</a>{% if not loop.last %}, {% endif %}
                                 {% endfor %}
@@ -58,24 +58,24 @@
 
                         {% if content_data.year !=  0 %}
                             <div style="padding: 5px;">
-                                <span style="font-weight: bold;">Год:</span>
+                                <span style="font-weight: bold;">{{ 'films.year'|trans }}</span>
                                 {{ content_data.year }}
                             </div>
                         {% endif %}
                         {% if content_data.duration !=  0 %}
                             <div style="padding: 5px;">
-                                <span style="font-weight: bold;">Продолжительность:</span>
+                                <span style="font-weight: bold;">{{ 'films.duration'|trans }}</span>
                                 {{ content_data.duration }}
                             </div>
                         {% endif %}
                         {% if content_data.budget !=  0 %}
                             <div style="padding: 5px;">
-                                <span style="font-weight: bold;">Бюджет:</span>
+                                <span style="font-weight: bold;">{{ 'films.budget'|trans }}</span>
                                 {{ content_data.budget }}
                             </div>
                         {% endif %}
                         <div style="padding: 5px;">
-                            <span style="font-weight: bold;">Анотация:</span><br/>
+                            <span style="font-weight: bold;">{{ 'films.description'|trans }}</span><br/>
                             {{ content_data.description }}
                         </div>
                     </div>
@@ -88,16 +88,16 @@
                     {#{% endif %}#}
 
                         <div style="text-align: right; padding: 5px;">
-                            <button type="submit" class="btn btn-primary btn-success btn-xs add-mycontent-js" data-id="{{ content_data.id }}"/>Добавить в мои</button>
+                            <button type="submit" class="btn btn-primary btn-success btn-xs add-mycontent-js" data-id="{{ content_data.id }}"/>{{ 'films.add_my'|trans }}</button>
                         </div>
                         <div style="text-align: right; padding: 5px; display: none;">
-                            <button type="submit" class="btn btn-primary btn-danger btn-xs del-mycontent-js" data-id="{{ content_data.id }}"/>Удалить из моих</button>
+                            <button type="submit" class="btn btn-primary btn-danger btn-xs del-mycontent-js" data-id="{{ content_data.id }}"/>{{ 'films.del_my'|trans }}</button>
                         </div>
                     {% endif %}
                 </div>
             {% endif %}
         {% else %}
-            <div class="not_message"><center>Нет записей</center></div>
+            <div class="not_message"><center>{{ 'films.not_message'|trans }}</center></div>
         {% endfor %}
         <div class="pagerfanta">{{ pagerfanta(pagerfanta, 'default') }}</div>
     </div>

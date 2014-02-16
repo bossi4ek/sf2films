@@ -18,10 +18,10 @@
                     {% if is_granted('ROLE_ADMIN') %}
                         <div style="float: right;">
                             <a href="{{ path('sf2films_films_edit', {'id': data.id}) }}">
-                                <span class="glyphicon glyphicon-edit post_edit" title="Редактировать"></span>
+                                <span class="glyphicon glyphicon-edit post_edit" title="{{ 'films.edit'|trans }}"></span>
                             </a>
                             <a href="{{ path('sf2films_films_del', {'id': data.id}) }}">
-                                <span class="glyphicon glyphicon-remove post_delete" title="Удалить"></span>
+                                <span class="glyphicon glyphicon-remove post_delete" title="{{ 'films.delete'|trans }}"></span>
                             </a>
                         </div>
                     {% endif %}
@@ -29,7 +29,7 @@
 
                 {% if data.tags|length > 0 %}
                     <div style="padding: 5px;">
-                        <span style="font-weight: bold;">Теги:</span>
+                        <span style="font-weight: bold;">{{ 'films.tag'|trans }}</span>
                         {% for tag in data.tags %}
                             {{ tag.name }}{% if not loop.last %}, {% endif %}
                         {% endfor %}
@@ -38,7 +38,7 @@
 
                 {% if data.genres|length > 0 %}
                     <div style="padding: 5px;">
-                        <span style="font-weight: bold;">Жанр:</span>
+                        <span style="font-weight: bold;">{{ 'films.genre'|trans }}</span>
                         {% for genre in data.genres %}
                             <a href="{{ path('sf2films_films_by_genre', {'translit': genre.nameTranslit}) }}">{{ genre.name }}</a>{% if not loop.last %}, {% endif %}
                         {% endfor %}
@@ -47,7 +47,7 @@
 
                 {% if data.persons|length > 0 %}
                     <div style="padding: 5px;">
-                        <span style="font-weight: bold;">Актеры:</span>
+                        <span style="font-weight: bold;">{{ 'films.person'|trans }}</span>
                         {% for person in data.persons %}
                             <a href="{{ path('sf2films_films_by_person', {'translit': person.nameTranslit}) }}">{{ person.name }}</a>{% if not loop.last %}, {% endif %}
                         {% endfor %}
@@ -56,54 +56,54 @@
 
                 {% if data.year !=  0 %}
                     <div style="padding: 5px;">
-                        <span style="font-weight: bold;">Год:</span>
+                        <span style="font-weight: bold;">{{ 'films.year'|trans }}</span>
                         {{ data.year }}
                     </div>
                 {% endif %}
 
                 {% if data.duration !=  0 %}
                     <div style="padding: 5px;">
-                        <span style="font-weight: bold;">Продолжительность:</span>
+                        <span style="font-weight: bold;">{{ 'films.duration'|trans }}</span>
                         {{ data.duration }}
                     </div>
                 {% endif %}
 
                 {% if data.budget !=  0 %}
                     <div style="padding: 5px;">
-                        <span style="font-weight: bold;">Бюджет:</span>
+                        <span style="font-weight: bold;">{{ 'films.budget'|trans }}</span>
                         {{ data.budget }}
                     </div>
                 {% endif %}
 
                 <div style="padding: 5px;">
-                    <span style="font-weight: bold;">Анотация:</span><br/>
+                    <span style="font-weight: bold;">{{ 'films.description'|trans }}</span><br/>
                     {{ data.description }}
                 </div>
             </div>
             {% if is_granted('ROLE_USER') %}
                 <div style="text-align: right; padding: 5px;">
-                    <button type="submit" class="btn btn-primary btn-success btn-xs add-mycontent-js" data-id="{{ data.id }}"/>Добавить в мои</button>
+                    <button type="submit" class="btn btn-primary btn-success btn-xs add-mycontent-js" data-id="{{ data.id }}"/>{{ 'films.add_my'|trans }}</button>
                 </div>
                 <div style="text-align: right; padding: 5px; display: none;">
-                    <button type="submit" class="btn btn-primary btn-danger btn-xs del-mycontent-js" data-id="{{ data.id }}"/>Удалить из моих</button>
+                    <button type="submit" class="btn btn-primary btn-danger btn-xs del-mycontent-js" data-id="{{ data.id }}"/>{{ 'films.del_my'|trans }}</button>
                 </div>
             {% endif %}
         </div>
 
-        <h4>Комментарии:</h4>
+        <h4>{{ 'films.comments'|trans }}</h4>
         {% if is_granted('ROLE_USER') %}
         <div class="postFormBox">
             <form action="{{ path('sf2films_comment_add', {'id': data.id}) }}" method="post" {{ form_enctype(comment_form) }} novalidate="">
                 {{ form_errors(comment_form) }}
                 <div class="postFormFields">
                     <div>
-                        {{ form_label(comment_form.txt, 'Текст комментария') }}
+                        {{ form_label(comment_form.txt) }}
                         {{ form_errors(comment_form.txt) }}
                         {{ form_widget(comment_form.txt, {'attr': {'class': 'form-control'}}) }}
                     </div>
                 </div>
                 <div class="postFormButtons" style="overflow: hidden; text-align: center;">
-                    <button id="addСomment" type="submit" class="btn btn-primary" style="margin-right: 10px;"/>Добавить</button>
+                    <button id="addСomment" type="submit" class="btn btn-primary" style="margin-right: 10px;"/>{{ 'films.comments_add'|trans }}</button>
                 </div>
                 {{ form_rest(comment_form) }}
             </form>
@@ -121,11 +121,11 @@
                         <div style="font-weight: bold; float: right">
                             {% if is_granted('EDIT', comment) or is_granted('ROLE_ADMIN') %}
                                 <a href="{{ path('sf2films_comment_edit', {'id': comment.id}) }}">
-                                    <span class="glyphicon glyphicon-edit edit-comment-js" title="Редактировать"></span>
+                                    <span class="glyphicon glyphicon-edit edit-comment-js" title="{{ 'films.edit'|trans }}"></span>
                                 </a>
                             {% endif %}
                             {% if is_granted('ROLE_ADMIN') %}
-                                <span style="cursor: pointer;" class="glyphicon glyphicon-remove del-comment-js" data-id="{{ comment.id }}" title="Удалить"></span>
+                                <span style="cursor: pointer;" class="glyphicon glyphicon-remove del-comment-js" data-id="{{ comment.id }}" title="{{ 'films.delete'|trans }}"></span>
                             {% endif %}
                         </div>
                     </div>
@@ -136,6 +136,6 @@
     </div>
 
     <div>
-        <a href="{{ path('sf2films_films_all') }}">К фильмам</a>
+        <a href="{{ path('sf2films_films_all') }}">{{ 'films.back_to_films'|trans }}</a>
     </div>
 {% endblock %}

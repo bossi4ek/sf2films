@@ -10,6 +10,8 @@ namespace Sf2films\FilmsBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\Translatable\Translatable;
 
 /**
  * @ORM\Entity
@@ -24,6 +26,7 @@ class Genre {
     protected $id;
 
     /**
+     * @Gedmo\Translatable
      * @ORM\Column()
      * @Assert\Length(min = "2")
      */
@@ -38,6 +41,13 @@ class Genre {
      * @ORM\Column(type="smallint")
      */
     protected $is_publish;
+
+    /**
+     * @Gedmo\Locale
+     * Used locale to override Translation listener`s locale
+     * this is not a mapped field of entity metadata, just a simple property
+     */
+    private $locale;
 
     /**
      * ORM\@ManyToMany(targetEntity="Content", mappedBy="genres")
@@ -132,26 +142,8 @@ class Genre {
         return $this->name;
     }
 
-    /**
-     * Set slug
-     *
-     * @param string $slug
-     * @return Genre
-     */
-    public function setSlug($slug)
+    public function setTranslatableLocale($locale)
     {
-        $this->slug = $slug;
-    
-        return $this;
-    }
-
-    /**
-     * Get slug
-     *
-     * @return string 
-     */
-    public function getSlug()
-    {
-        return $this->slug;
+        $this->locale = $locale;
     }
 }

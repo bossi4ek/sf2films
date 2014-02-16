@@ -1,76 +1,101 @@
 sf2films_homepage:
-    pattern:  /
-    defaults: { _controller: Sf2filmsFilmsBundle:Default:index}
+    pattern:  /{_locale}
+    defaults: { _controller: Sf2filmsFilmsBundle:Default:index, _locale: ru }
+    requirements:
+        _locale: en|ru
 
 sf2films_films_all:
-    pattern:  /films/{page}
-    defaults: { _controller: Sf2filmsFilmsBundle:Content:showAll, page: 1 }
+    pattern:  /{_locale}/films/{page}
+    defaults: { _controller: Sf2filmsFilmsBundle:Content:showAll, page: 1, _locale: ru }
     requirements:
         page:  \d+
+        _locale: en|ru
 
 sf2films_films_add:
-    pattern:  /films/add
-    defaults: { _controller: Sf2filmsFilmsBundle:Content:addElement }
+    pattern:  /{_locale}/films/add
+    defaults: { _controller: Sf2filmsFilmsBundle:Content:addElement, _locale: ru }
+    requirements:
+        _locale: en|ru
 
 sf2films_films_edit:
-    pattern:  /films/edit/{id}
-    defaults: { _controller: Sf2filmsFilmsBundle:Content:editElement }
+    pattern:  /{_locale}/films/edit/{id}
+    defaults: { _controller: Sf2filmsFilmsBundle:Content:editElement, _locale: ru }
+    requirements:
+        _locale: en|ru
 
 sf2films_films_del:
     pattern:  /films/del/{id}
     defaults: { _controller: Sf2filmsFilmsBundle:Content:delElement }
 
 sf2films_films_element:
-    pattern:  /films/{slug}
-    defaults: { _controller: Sf2filmsFilmsBundle:Content:showElement }
+    pattern:  /{_locale}/films/{slug}
+    defaults: { _controller: Sf2filmsFilmsBundle:Content:showElement, _locale: ru }
+    requirements:
+        _locale: en|ru
 
 sf2films_films_by_genre:
-    pattern:  /films/genre/{translit}/{page}
-    defaults: { _controller: Sf2filmsFilmsBundle:Content:showAllByGenre, page: 1 }
+    pattern:  /{_locale}/films/genre/{translit}/{page}
+    defaults: { _controller: Sf2filmsFilmsBundle:Content:showAllByGenre, page: 1, _locale: ru }
     requirements:
         page:  \d+
+        _locale: en|ru
 
 sf2films_films_by_person:
-    pattern:  /films/person/{translit}
-    defaults: { _controller: Sf2filmsFilmsBundle:Content:showAllByPerson }
+    pattern:  /{_locale}/films/person/{translit}
+    defaults: { _controller: Sf2filmsFilmsBundle:Content:showAllByPerson, _locale: ru }
+    requirements:
+        _locale: en|ru
 
 sf2films_sitemap:
-    pattern:  /sitemap
-    defaults: { _controller: Sf2filmsFilmsBundle:Content:showSiteMap, _format: xml}
+    pattern:  /{_locale}/sitemap
+    defaults: { _controller: Sf2filmsFilmsBundle:Content:showSiteMap, _format: xml, _locale: en}
     requirements:
-          _format:  xml
+        _format:  xml
+        _locale: en|ru
 
 
 
 sf2films_films_genre:
-    pattern:  /genre
-    defaults: { _controller: Sf2filmsFilmsBundle:Genre:showAll }
+    pattern:  /{_locale}/genre
+    defaults: { _controller: Sf2filmsFilmsBundle:Genre:showAll, _locale: ru }
+    requirements:
+        _locale: en|ru
 
 sf2films_films_genre_add:
-    pattern:  /genre/add
-    defaults: { _controller: Sf2filmsFilmsBundle:Genre:addElement }
+    pattern:  /{_locale}/genre/add
+    defaults: { _controller: Sf2filmsFilmsBundle:Genre:addElement, _locale: ru }
+    requirements:
+        _locale: en|ru
 
 sf2films_films_genre_edit:
-    pattern:  /genre/edit/{id}
-    defaults: { _controller: Sf2filmsFilmsBundle:Genre:editElement }
+    pattern:  /{_locale}/genre/edit/{id}
+    defaults: { _controller: Sf2filmsFilmsBundle:Genre:editElement, _locale: ru }
+    requirements:
+        _locale: en|ru
 
 sf2films_films_genre_del:
-    pattern:  /genre/del/{id}
+    pattern:  /{_locale}/genre/del/{id}
     defaults: { _controller: Sf2filmsFilmsBundle:Genre:delElement }
 
 
 
 sf2films_films_person:
-    pattern:  /person
-    defaults: { _controller: Sf2filmsFilmsBundle:Person:showAll }
+    pattern:  /{_locale}/person
+    defaults: { _controller: Sf2filmsFilmsBundle:Person:showAll, _locale: ru }
+    requirements:
+        _locale: en|ru
 
 sf2films_films_person_add:
-    pattern:  /person/add
-    defaults: { _controller: Sf2filmsFilmsBundle:Person:addElement }
+    pattern:  /{_locale}/person/add
+    defaults: { _controller: Sf2filmsFilmsBundle:Person:addElement, _locale: ru }
+    requirements:
+        _locale: en|ru
 
 sf2films_films_person_edit:
-    pattern:  /person/edit/{id}
-    defaults: { _controller: Sf2filmsFilmsBundle:Person:editElement }
+    pattern:  /{_locale}/person/edit/{id}
+    defaults: { _controller: Sf2filmsFilmsBundle:Person:editElement, _locale: ru }
+    requirements:
+        _locale: en|ru
 
 sf2films_films_person_del:
     pattern:  /person/del/{id}

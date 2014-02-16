@@ -1,0 +1,34 @@
+menu:
+  site_name:      Каталог фильмов
+  main:           Главная
+  films:          Фильмы
+  genre:          Жанры
+  person:         Актеры
+  sitemap:        Карта сайта
+  login:          Войти
+  logout:         Выйти
+main:
+  main_page:      Главная страница
+films:
+  all_films:      Все фильмы
+  add_film:       Добавить фильм
+  no_publish:     (неопубликованный)
+  not_message:    Нет записей
+
+  edit:           Редактировать
+  delete:         Удалить
+
+  tag:            Теги:
+  genre:          Жанр:
+  person:         Актеры:
+  year:           Год:
+  duration:       Продолжительность:
+  budget:         Бюджет:
+  description:    Анотация:
+  comments:       Комментарии:
+  comments_add:   Добавить
+  back_to_films:  К фильмам
+
+  add_my:         Добавить в мои
+  del_my:         Удалить из моих
+
